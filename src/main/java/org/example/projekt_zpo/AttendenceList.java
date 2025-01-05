@@ -16,12 +16,6 @@ public class AttendenceList extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/StyleSheets/MainScene.css")).toExternalForm());
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/app_icon.png")).toExternalForm());
-        /*VBox VBox = (javafx.scene.layout.VBox) scene.lookup("#GroupsContainer");
-        for (int i = 0; i < 5; i++) {
-            FXMLLoader fxmlLoader2 = new FXMLLoader(AttendenceList.class.getResource("GroupItem.fxml"));
-            AnchorPane temp = fxmlLoader2.load();
-            VBox.getChildren().add(temp);
-        }*/
         stage.getIcons().add(image);
         stage.setTitle("Lista Obecności - Panel logowania");
         stage.setScene(scene);

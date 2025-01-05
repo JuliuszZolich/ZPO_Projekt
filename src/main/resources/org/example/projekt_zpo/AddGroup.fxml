@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.AddGroupController">
+<AnchorPane prefHeight="220.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.AddGroupController">
    <children>
       <Label layoutX="99.0" layoutY="14.0" text="Dodaj Grupe">
          <font>
@@ -18,8 +18,13 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="66.0" layoutY="107.0" prefHeight="26.0" prefWidth="270.0" promptText="Nazwa Grupy" />
-      <Button layoutX="90.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
-      <Button layoutX="220.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
+      <TextField fx:id="GroupNameTextArea" layoutX="66.0" layoutY="107.0" prefHeight="26.0" prefWidth="270.0" promptText="Nazwa Grupy" />
+      <Button fx:id="CancelAddGroupButton" layoutX="90.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#close" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
+      <Button fx:id="AddGroupButton" layoutX="220.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
+      <Label fx:id="ErrorMessageLabel" alignment="CENTER" layoutX="68.0" layoutY="146.0" prefHeight="17.0" prefWidth="270.0" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

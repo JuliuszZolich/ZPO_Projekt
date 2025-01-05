@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane fx:id="StudentItem" maxHeight="70.0" maxWidth="780.0" minHeight="70.0" minWidth="780.0" prefHeight="70.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label fx:id="StudentItemName" layoutX="195.0" layoutY="15.0" prefHeight="30.0" prefWidth="186.0" text="Nazwa Studenta">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="41.0" layoutY="15.0" text="Index">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <Line endY="40.0" layoutX="150.0" layoutY="10.0" />
+        <Line endX="750.0" layoutX="15.0" layoutY="60.0" />
+      <ChoiceBox layoutX="589.0" layoutY="17.0" prefWidth="150.0" value="Wybierz">
+          <items>
+              <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Obecny" />
+                  <String fx:value="Nieobecny" />
+                  <String fx:value="Usprawiedliwiony" />
+                  <String fx:value="Spoźniony" />
+              </FXCollections>
+          </items>
+      </ChoiceBox>
+    </children>
+</AnchorPane>

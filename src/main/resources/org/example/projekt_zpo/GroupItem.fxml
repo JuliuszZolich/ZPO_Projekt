@@ -5,17 +5,16 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane fx:id="GroupItem" layoutX="-1.0" layoutY="4.0" prefHeight="41.0" prefWidth="220.0">
+      <AnchorPane fx:id="GroupItem" layoutX="-1.0" layoutY="4.0" prefHeight="41.0" prefWidth="200.0">
          <children>
-            <Label fx:id="GroupItemName" prefHeight="40.0" prefWidth="220.0" text="Grupa 1">
+            <Label fx:id="GroupItemName" layoutX="20.0" prefHeight="40.0" prefWidth="200.0" text="Grupa 1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Line fx:id="LineUnderGroupItem" endX="220.0" layoutY="40.0" />
+            <Line fx:id="LineUnderGroupItem" endX="190.0" layoutY="40.0" startX="15.0" />
          </children>
       </AnchorPane>
    </children>

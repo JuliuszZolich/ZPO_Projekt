@@ -19,14 +19,22 @@ public class AddStudentController {
 
     public void add(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        int index = Integer.parseInt(AddStudentIndex.getText());
-        if (index < 100000 || index > 999999) {
+        try {
+            int index = Integer.parseInt(AddStudentIndex.getText());
+            if (index < 100000 || index > 999999) {
+                AddStudentErrorLabel.setVisible(true);
+                AddStudentIndex.setText("");
+                AddStudentErrorLabel.setText("Błędne dane!");
+            }
+            else{
+                //TODO : DODAWANIE STUDENTA DO GRUPY
+                stage.close();
+            }
+        }
+        catch (NumberFormatException e) {
             AddStudentErrorLabel.setVisible(true);
             AddStudentIndex.setText("");
-        }
-        else{
-            //TODO : DODAWANIE STUDENTA DO GRUPY
-            stage.close();
+            AddStudentErrorLabel.setText("Błędne dane!");
         }
     }
 }
