@@ -1,0 +1,8 @@
+#GroupItemName{
+    -fx-padding: 5px;
+}
+
+#GroupItemName:hover{
+    -fx-background-color: #bdbdbd;
+    -fx-cursor: pointer;
+}

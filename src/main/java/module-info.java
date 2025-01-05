@@ -12,4 +12,6 @@ module org.example.projekt_zpo {
 
     opens org.example.projekt_zpo to javafx.fxml;
     exports org.example.projekt_zpo;
+    exports org.example.projekt_zpo.Controllers;
+    opens org.example.projekt_zpo.Controllers to javafx.fxml;
 }

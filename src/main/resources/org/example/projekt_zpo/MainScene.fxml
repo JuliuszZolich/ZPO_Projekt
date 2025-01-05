@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="MainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.MainController">
+   <children>
+      <Button fx:id="AddGroupButton" layoutX="80.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#openAddGroupWindow" prefHeight="26.0" prefWidth="150.0" text="Dodaj Grupe" />
+      <Label fx:id="UserName" layoutX="24.0" layoutY="32.0" text="Nazwa Użytkownika">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="GroupLabel" layoutX="99.0" layoutY="131.0" prefHeight="58.0" prefWidth="111.0" text="Grupy">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Line endX="250.0" layoutX="30.0" layoutY="190.0" />
+      <Line endY="660.0" layoutX="320.0" layoutY="20.0" />
+      <Label fx:id="GroupNameLabel" layoutX="367.0" layoutY="31.0" text="Nazwa Grupy">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
+      <Button fx:id="GroupAddButton" layoutX="1059.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#openAddStudentWindow" text="Dodaj Studenta" />
+      <Line endX="830.0" layoutX="343.0" layoutY="160.0" />
+      <ChoiceBox fx:id="GroupChoiceBox" layoutX="355.0" layoutY="118.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="GroupChoiceTermin" layoutX="551.0" layoutY="118.0" prefWidth="150.0" />
+      <VBox fx:id="StudentsContainer" layoutX="342.0" layoutY="179.0" prefHeight="500.0" prefWidth="810.0" />
+      <VBox fx:id="GroupsContainer" layoutX="45.0" layoutY="229.0" prefHeight="400.0" prefWidth="220.0" />
+   </children>
+</AnchorPane>
