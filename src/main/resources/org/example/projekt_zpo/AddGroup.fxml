@@ -18,8 +18,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="66.0" layoutY="107.0" prefHeight="26.0" prefWidth="268.0" promptText="Nazwa Grupy" />
+      <TextField layoutX="66.0" layoutY="107.0" prefHeight="26.0" prefWidth="270.0" promptText="Nazwa Grupy" />
       <Button layoutX="90.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
-      <Button layoutX="223.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
+      <Button layoutX="220.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
    </children>
 </AnchorPane>
