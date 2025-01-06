@@ -9,6 +9,9 @@ module org.example.projekt_zpo {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
+    requires java.sql;
 
     opens org.example.projekt_zpo to javafx.fxml;
     exports org.example.projekt_zpo;
