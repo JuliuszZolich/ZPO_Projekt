@@ -7,12 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainController {
     @FXML
@@ -81,7 +83,7 @@ public class MainController {
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        stage.setTitle("Dodaj Grupę");
+        setTitleAndIcon("Dodaj Grupę", stage);
         Stage ownerStage = (Stage) AddGroupButton.getScene().getWindow();
         stage.initOwner(ownerStage);
         stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
@@ -93,7 +95,7 @@ public class MainController {
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        stage.setTitle("Dodaj Studenta");
+        setTitleAndIcon("Dodaj Studenta", stage);
         Stage ownerStage = (Stage) AddStudentButton.getScene().getWindow();
         stage.initOwner(ownerStage);
         stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
@@ -145,7 +147,7 @@ public class MainController {
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        stage.setTitle("Dodaj Termin");
+        setTitleAndIcon("Dodaj Termin", stage);
         Stage ownerStage = (Stage) AddTerminButton.getScene().getWindow();
         stage.initOwner(ownerStage);
         stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
@@ -162,10 +164,20 @@ public class MainController {
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        stage.setTitle("Usuń Termin");
+        setTitleAndIcon("Usuń Termin", stage);
         Stage ownerStage = (Stage) DeleteTerminButton.getScene().getWindow();
         stage.initOwner(ownerStage);
         stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
         stage.showAndWait();
+    }
+
+    public void setUserName(String userName, String userLastName) {
+        UserName.setText(userName + " " + userLastName);
+    }
+
+    public void setTitleAndIcon(String title, Stage stage) {
+        stage.setTitle(title);
+        Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/app_icon.png")).toExternalForm());
+        stage.getIcons().add(image);
     }
 }

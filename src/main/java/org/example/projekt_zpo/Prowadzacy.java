@@ -6,35 +6,35 @@ public class Prowadzacy {
     private String nazwisko;
     private String haslo;
 
-    public void SetId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void SetImie(String imie) {
+    public void setImie(String imie) {
         this.imie = imie;
     }
 
-    public void SetNazwisko(String nazwisko) {
+    public void setNazwisko(String nazwisko) {
         this.nazwisko = nazwisko;
     }
 
-    public void SetHaslo(String haslo) {
+    public void setHaslo(String haslo) {
         this.haslo = haslo;
     }
 
-    public int GetId() {
+    public int getId() {
         return id;
     }
 
-    public String GetImie() {
+    public String getImie() {
         return imie;
     }
 
-    public String GetNazwisko() {
+    public String getNazwisko() {
         return nazwisko;
     }
 
-    public String GetHaslo() {
+    public String getHaslo() {
         return haslo;
     }
 }
