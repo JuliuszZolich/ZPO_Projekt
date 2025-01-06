@@ -6,6 +6,8 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
@@ -14,12 +16,12 @@
 <AnchorPane fx:id="MainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.MainController">
    <children>
       <Button fx:id="AddGroupButton" layoutX="80.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#openAddGroupWindow" prefHeight="26.0" prefWidth="150.0" text="Dodaj Grupe" />
-      <Label fx:id="UserName" layoutX="24.0" layoutY="32.0" text="Nazwa Użytkownika">
+      <Label fx:id="UserName" layoutX="45.0" layoutY="85.0" text="Nazwa Użytkownika">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="GroupLabel" layoutX="99.0" layoutY="131.0" prefHeight="58.0" prefWidth="111.0" text="Grupy">
+      <Label fx:id="GroupLabel" layoutX="120.0" layoutY="131.0" prefHeight="58.0" prefWidth="111.0" text="Grupy">
          <font>
             <Font size="40.0" />
          </font>
@@ -41,7 +43,7 @@
             </FXCollections>
          </items>
       </ChoiceBox>
-      <ChoiceBox fx:id="GroupChoiceTermin" layoutX="551.0" layoutY="118.0" prefWidth="150.0" value = "Wybierz Termin" />
+      <ChoiceBox fx:id="GroupChoiceTermin" layoutX="551.0" layoutY="118.0" prefWidth="150.0" value="Wybierz Termin" />
       <ScrollPane hbarPolicy="NEVER" layoutX="358.0" layoutY="179.0" prefHeight="500.0" prefWidth="800.0">
          <content>
             <VBox fx:id="StudentsInGroupList" prefHeight="500.0" prefWidth="800.0" />
@@ -53,5 +55,17 @@
          </content>
       </ScrollPane>
       <Button fx:id="AddTerminButton" layoutX="1059.0" layoutY="118.0" mnemonicParsing="false" onAction="#addTermin" onMouseClicked="#openAddStudentWindow" prefHeight="26.0" prefWidth="98.0" text="Dodaj Termin" visible="false" />
+      <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="120.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/user.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="45.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/group.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="LogOutButton" layoutX="1056.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="26.0" prefWidth="105.0" text="Wyloguj" />
+      <Button fx:id="DeleteTerminButton" layoutX="943.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#openDeleteTerminWindow" text="Usuń Termin" />
    </children>
 </AnchorPane>

@@ -31,6 +31,12 @@ public class MainController {
     public Label GroupNameLabel;
 
     @FXML
+    public Button LogOutButton;
+
+    @FXML
+    public Button DeleteTerminButton;
+
+    @FXML
     private VBox GroupList;
 
     @FXML
@@ -45,7 +51,7 @@ public class MainController {
     public void initialize() throws IOException {
         showStudentsInGroup();
         showGroupList();
-        setButtonsVisibility(false, true, false);
+        setButtonsVisibility(false, true, false, false);
 
         GroupChoiceBox.setOnAction(event -> {
             String selectedOption = (String) GroupChoiceBox.getValue();
@@ -53,7 +59,7 @@ public class MainController {
                 case "Lista Studentów":
                     try {
                         showStudentsInGroup();
-                        setButtonsVisibility(false, true, false);
+                        setButtonsVisibility(false, true, false, false);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -61,7 +67,7 @@ public class MainController {
                 case "Lista Terminów":
                     try {
                         showStudentsAttendanceInTermin();
-                        setButtonsVisibility(true, false, true);
+                        setButtonsVisibility(true, false, true, true);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -106,12 +112,14 @@ public class MainController {
         }
     }
 
-    public void setButtonsVisibility(boolean setAddTerminButton, boolean setAddStudentButton, boolean setTerminChoiceBox) {
+    public void setButtonsVisibility(boolean setAddTerminButton, boolean setAddStudentButton, boolean setTerminChoiceBox, boolean setDeleteTerminButton) {
         GroupChoiceTermin.setVisible(setTerminChoiceBox);
         AddStudentButton.setVisible(setAddStudentButton);
         AddStudentButton.setDisable(!setAddStudentButton);
         AddTerminButton.setVisible(setAddTerminButton);
         AddTerminButton.setDisable(!setAddTerminButton);
+        DeleteTerminButton.setVisible(setDeleteTerminButton);
+        DeleteTerminButton.setDisable(!setDeleteTerminButton);
     }
 
     public void showGroupList() throws IOException {
@@ -132,7 +140,6 @@ public class MainController {
         }
     }
 
-
     public void addTermin(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/AddTermin.fxml"));
         Stage stage = new Stage();
@@ -140,6 +147,23 @@ public class MainController {
         stage.setScene(scene);
         stage.setTitle("Dodaj Termin");
         Stage ownerStage = (Stage) AddTerminButton.getScene().getWindow();
+        stage.initOwner(ownerStage);
+        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+    }
+
+    public void logout(MouseEvent mouseEvent) {
+        Stage stage = (Stage) LogOutButton.getScene().getWindow();
+        stage.close();
+    }
+
+    public void openDeleteTerminWindow(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/DeleteTermin.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
+        stage.setTitle("Usuń Termin");
+        Stage ownerStage = (Stage) DeleteTerminButton.getScene().getWindow();
         stage.initOwner(ownerStage);
         stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
         stage.showAndWait();

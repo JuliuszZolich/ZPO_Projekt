@@ -19,14 +19,15 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <ChoiceBox fx:id="AddTermin" layoutX="65.0" layoutY="213.0" prefWidth="270.0" />
+        <ChoiceBox fx:id="ChoseGroup" layoutX="65.0" layoutY="213.0" prefWidth="270.0" />
         <Label layoutX="87.0" layoutY="185.0" prefHeight="18.0" prefWidth="166.0" text="Grupa:">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button layoutX="90.0" layoutY="283.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
-        <Button layoutX="220.0" layoutY="283.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
-      <DatePicker layoutX="65.0" layoutY="149.0" prefHeight="26.0" prefWidth="270.0" promptText="Wybierz termin" />
+        <Button fx:id="CancelAddTerminButton" layoutX="90.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
+        <Button fx:id="AddTerminButton" layoutX="220.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
+      <DatePicker fx:id="ChoseTermin" layoutX="65.0" layoutY="149.0" prefHeight="26.0" prefWidth="270.0" promptText="Wybierz termin" />
+      <Label fx:id="AddTerminError" alignment="CENTER" layoutX="67.0" layoutY="253.0" prefHeight="18.0" prefWidth="270.0" textFill="RED" visible="false" />
     </children>
 </AnchorPane>

@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="StudentItem" maxHeight="70.0" maxWidth="780.0" minHeight="70.0" minWidth="780.0" prefHeight="70.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="StudentItem" maxHeight="70.0" maxWidth="780.0" minHeight="70.0" minWidth="780.0" prefHeight="70.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.StudentItemController">
    <children>
       <Label fx:id="StudentItemName" layoutX="195.0" layoutY="15.0" prefHeight="30.0" prefWidth="186.0" text="Nazwa Studenta">
          <font>
@@ -21,7 +21,7 @@
       </Label>
       <Line endY="40.0" layoutX="150.0" layoutY="10.0" />
       <Line endX="750.0" layoutX="15.0" layoutY="60.0" />
-      <ImageView fx:id="DeleteStudent" fitHeight="30.0" fitWidth="30.0" layoutX="720.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="DeleteStudent" fitHeight="30.0" fitWidth="30.0" layoutX="720.0" layoutY="15.0" onMouseClicked="#deleteStudent" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/bin.png" />
          </image>
