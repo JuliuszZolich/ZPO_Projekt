@@ -12,6 +12,7 @@ module org.example.projekt_zpo {
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
     requires java.sql;
+    requires org.json;
 
     opens org.example.projekt_zpo to javafx.fxml;
     exports org.example.projekt_zpo;

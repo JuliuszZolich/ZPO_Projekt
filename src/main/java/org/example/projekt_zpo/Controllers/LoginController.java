@@ -12,8 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.projekt_zpo.Prowadzacy;
+import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -30,12 +30,10 @@ public class LoginController {
     @FXML
     public PasswordField PasswordField;
 
-
-    public <User> void login(MouseEvent mouseEvent) throws IOException {
+    public void login(MouseEvent mouseEvent){
         Stage loginStage = (Stage) LoginButton.getScene().getWindow();
         String username = LoginTextArea.getText();
         String password = PasswordField.getText();
-        Prowadzacy prowadzacy = null;
         if (LoginTextArea.getText().isBlank() || PasswordField.getText().isBlank()) {
             PasswordField.setText("");
             LoginTextArea.setText("");
@@ -44,17 +42,18 @@ public class LoginController {
         }
         else {
             try {
+
+                JSONObject json = createJSONObject(username, password);
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(new URI("http://172.30.83.83:8080/api/login"))
-                        .POST(HttpRequest.BodyPublishers.ofString(""))
+                        .POST(HttpRequest.BodyPublishers.ofString(json.toString()))
                         .build();
 
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
                 ObjectMapper mapper = new ObjectMapper();
-                prowadzacy = mapper.readValue(response.body(), Prowadzacy.class);
-
+                Prowadzacy prowadzacy = mapper.readValue(response.body(), Prowadzacy.class);
+                System.out.println(prowadzacy.getHaslo() + " " + prowadzacy.getImie());
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/MainScene.fxml"));
                 Scene mainScene = new Scene(fxmlLoader.load());
                 Stage mainStage = new Stage();
@@ -75,5 +74,13 @@ public class LoginController {
         stage.setTitle(title);
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/app_icon.png")).toExternalForm());
         stage.getIcons().add(image);
+    }
+
+    public JSONObject createJSONObject(String login, String password) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("password", password);
+        jsonObject.put("login", login);
+        System.out.println(jsonObject.toString());
+        return jsonObject;
     }
 }
