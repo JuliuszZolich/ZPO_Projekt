@@ -13,18 +13,18 @@ public class ConfirmDeleteStudentController {
     public Label ConfirmationLabel;
 
     @FXML
-    public Button CancelDeleteConformation;
+    public Button CancelDeleteConfirmation;
 
     @FXML
     public Button DeleteUserConfirmationButton;
 
     public void cancel(MouseEvent mouseEvent) {
-        Stage stage = (Stage) CancelDeleteConformation.getScene().getWindow();
+        Stage stage = (Stage) CancelDeleteConfirmation.getScene().getWindow();
         stage.close();
     }
 
     public void delete(MouseEvent mouseEvent) {
-        Stage stage = (Stage) CancelDeleteConformation.getScene().getWindow();
+        Stage stage = (Stage) CancelDeleteConfirmation.getScene().getWindow();
         stage.close();
     }
 }

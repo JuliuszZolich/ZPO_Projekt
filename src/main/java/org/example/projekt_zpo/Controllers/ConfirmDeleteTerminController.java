@@ -7,18 +7,18 @@ import javafx.stage.Stage;
 
 public class ConfirmDeleteTerminController {
     @FXML
-    public Button CancelDeleteTerminConformation;
+    public Button CancelDeleteTerminConfirmation;
 
     @FXML
     public Button DeleteTerminConfirmationButton;
 
     public void cancel(MouseEvent mouseEvent) {
-        Stage stage = (Stage) CancelDeleteTerminConformation.getScene().getWindow();
+        Stage stage = (Stage) CancelDeleteTerminConfirmation.getScene().getWindow();
         stage.close();
     }
 
     public void delete(MouseEvent mouseEvent) {
-        Stage stage = (Stage) CancelDeleteTerminConformation.getScene().getWindow();
+        Stage stage = (Stage) CancelDeleteTerminConfirmation.getScene().getWindow();
         stage.close();
     }
 }

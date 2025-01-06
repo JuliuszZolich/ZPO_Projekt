@@ -12,7 +12,7 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-        <Button fx:id="CancelDeleteTerminConformation" layoutX="98.0" layoutY="133.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="26.0" prefWidth="86.0" text="Anuluj" />
+        <Button fx:id="CancelDeleteTerminConfirmation" layoutX="98.0" layoutY="133.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="26.0" prefWidth="86.0" text="Anuluj" />
         <Button fx:id="DeleteTerminConfirmationButton" layoutX="283.0" layoutY="133.0" mnemonicParsing="false" onMouseClicked="#delete" prefHeight="26.0" prefWidth="86.0" text="Tak" />
     </children>
 </AnchorPane>
