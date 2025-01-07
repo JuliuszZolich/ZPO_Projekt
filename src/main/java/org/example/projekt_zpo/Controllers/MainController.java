@@ -12,8 +12,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.projekt_zpo.Grupa;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainController {
@@ -52,7 +54,6 @@ public class MainController {
 
     public void initialize() throws IOException {
         showStudentsInGroup();
-        showGroupList();
         setButtonsVisibility(false, true, false, false);
 
         GroupChoiceBox.setOnAction(event -> {
@@ -124,11 +125,17 @@ public class MainController {
         DeleteTerminButton.setDisable(!setDeleteTerminButton);
     }
 
-    public void showGroupList() throws IOException {
+    public void showGroupList(ArrayList<Grupa> grupy) throws IOException {
         GroupList.getChildren().clear();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < grupy.size(); i++) {
+            Grupa temp = grupy.get(i);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/GroupItem.fxml"));
             AnchorPane pane = loader.load();
+            GroupItemController controller = loader.getController();
+            controller.setGroupItemName(temp.getNazwa());
+            if (i == grupy.size() - 1) {
+                controller.setLineUnderGroupItem();
+            }
             GroupList.getChildren().add(pane);
         }
     }

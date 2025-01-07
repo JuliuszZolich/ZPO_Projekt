@@ -42,7 +42,7 @@ public class DeleteTerminController {
             DeleteTerminError.setText("Nie wybrano Terminu!");
         }
         else {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/ConfirmDeleteStudent.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/ConfirmDeleteTermin.fxml"));
             Stage confirmStage = new Stage();
             Scene scene = new Scene(fxmlLoader.load());
             confirmStage.setScene(scene);
