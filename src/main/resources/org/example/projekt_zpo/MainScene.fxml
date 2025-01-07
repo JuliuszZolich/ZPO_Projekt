@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="MainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" onMouseClicked="#logout" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.MainController">
+<AnchorPane fx:id="MainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.MainController">
    <children>
       <Button fx:id="AddGroupButton" layoutX="80.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#openAddGroupWindow" prefHeight="26.0" prefWidth="150.0" text="Dodaj Grupe" />
       <Label fx:id="UserName" alignment="CENTER" layoutX="14.0" layoutY="100.0" prefWidth="300.0" text="Nazwa Użytkownika">
