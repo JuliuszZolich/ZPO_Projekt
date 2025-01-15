@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.SetAttendanceForStudentController">
+    <children>
+        <Label layoutX="63.0" layoutY="37.0" text="Ustaw Obecność">
+            <font>
+                <Font name="System Bold" size="36.0" />
+            </font>
+        </Label>
+        <Label layoutX="87.0" layoutY="121.0" prefHeight="18.0" prefWidth="166.0" text="Student:">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="87.0" layoutY="193.0" prefHeight="18.0" prefWidth="166.0" text="Obecność:">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Button fx:id="CancelButton" layoutX="90.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
+        <Button fx:id="setAttendance" layoutX="220.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#set" prefHeight="20.0" prefWidth="80.0" text="Ustaw" />
+        <Label fx:id="AddTerminError" alignment="CENTER" layoutX="67.0" layoutY="253.0" prefHeight="18.0" prefWidth="270.0" textFill="RED" visible="false" />
+      <ChoiceBox fx:id="ChoiceStudent" layoutX="67.0" layoutY="150.0" prefHeight="25.0" prefWidth="270.0" />
+      <ChoiceBox fx:id="ChoiceAttendance" layoutX="65.0" layoutY="228.0" prefHeight="25.0" prefWidth="270.0" />
+    </children>
+</AnchorPane>

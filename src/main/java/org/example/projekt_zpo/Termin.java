@@ -4,10 +4,10 @@ import java.sql.Date;
 
 public class Termin {
     private int id;
-    private int grupa_id;
+    private int grupaId;
     private String nazwa;
     private Date data;
-    private int prowadzacy_id;
+    private int prowadzacyId;
 
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
@@ -17,12 +17,12 @@ public class Termin {
         return nazwa;
     }
 
-    public void setGrupa_id(int grupa_id) {
-        this.grupa_id = grupa_id;
+    public void setGrupaId(int grupaId) {
+        this.grupaId = grupaId;
     }
 
-    public int getGrupa_id() {
-        return grupa_id;
+    public int getGrupaId() {
+        return grupaId;
     }
 
     public void setData(Date data) {
@@ -33,12 +33,12 @@ public class Termin {
         return data;
     }
 
-    public void setProwadzacy_id(int prowadzacy_id) {
-        this.prowadzacy_id = prowadzacy_id;
+    public void setProwadzacyId(int prowadzacyId) {
+        this.prowadzacyId = prowadzacyId;
     }
 
-    public int getProwadzacy_id() {
-        return prowadzacy_id;
+    public int getProwadzacyId() {
+        return prowadzacyId;
     }
 
     public void setId(int id) {

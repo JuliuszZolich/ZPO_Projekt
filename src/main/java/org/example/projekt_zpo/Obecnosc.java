@@ -2,16 +2,16 @@ package org.example.projekt_zpo;
 
 public class Obecnosc {
     private int id;
-    private int student_id;
+    private int studentId;
     private int attendance;
-    private int termin_id;
+    private int terminId;
 
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
-    public int getStudent_id() {
-        return student_id;
+    public int getStudentId() {
+        return studentId;
     }
 
     public void setAttendance(int attendance) {
@@ -22,11 +22,29 @@ public class Obecnosc {
         return attendance;
     }
 
-    public void setTermin_id(int termin_id) {
-        this.termin_id = termin_id;
+    public void setTerminId(int terminId) {
+        this.terminId = terminId;
     }
 
-    public int getTermin_id() {
-        return termin_id;
+    public int getTerminId() {
+        return terminId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String attendanceToString() {
+        return switch (attendance) {
+            case 1 -> "nieobecny";
+            case 2 -> "obecny";
+            case 3 -> "spoźniony";
+            case 4 -> "usprawiedliwiony";
+            default -> "brak";
+        };
     }
 }

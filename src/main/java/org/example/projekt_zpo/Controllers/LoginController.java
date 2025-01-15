@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.example.projekt_zpo.Prowadzacy;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -54,7 +55,7 @@ public class LoginController {
      * @param mouseEvent Zdarzenie kliknięcia przycisku logowania
      * @throws IOException Jeśli wystąpi błąd przy ładowaniu sceny lub komunikacji z serwerem
      */
-    public void loginUser(MouseEvent mouseEvent) throws IOException {
+    public void loginUser(MouseEvent mouseEvent) throws IOException, URISyntaxException, InterruptedException {
         Prowadzacy prowadzacy = null;
         Stage loginStage = (Stage) LoginButton.getScene().getWindow();
         String username = LoginTextArea.getText();
@@ -86,7 +87,7 @@ public class LoginController {
      * @param stage Obiekt okna logowania, które zostanie zamknięte
      * @throws IOException Jeśli wystąpi błąd przy ładowaniu sceny
      */
-    public void setDefaultMainScene(Prowadzacy prowadzacy, Stage stage) throws IOException {
+    public void setDefaultMainScene(Prowadzacy prowadzacy, Stage stage) throws IOException, URISyntaxException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/MainScene.fxml"));
         Scene mainScene = new Scene(fxmlLoader.load());
         Stage mainStage = new Stage();
@@ -99,6 +100,7 @@ public class LoginController {
         MainController.prowadzacyId = prowadzacy.getId();
         mainController.setColumns();
         mainController.showGroupList();
+        mainController.setTermsForGroup();
         mainController.showStudentsInGroup();
     }
 

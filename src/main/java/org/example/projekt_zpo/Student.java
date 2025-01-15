@@ -1,5 +1,7 @@
 package org.example.projekt_zpo;
 
+import java.util.ArrayList;
+
 public class Student {
     private int indeks;
     private String imie;
@@ -36,5 +38,9 @@ public class Student {
 
     public int getGrupaId() {
         return grupaId;
+    }
+
+    public String getIndeksToString() {
+        return String.valueOf(indeks);
     }
 }

@@ -28,6 +28,6 @@
         <Button fx:id="AddTerminButton" layoutX="220.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
       <DatePicker fx:id="ChoseTermin" layoutX="65.0" layoutY="149.0" prefHeight="26.0" prefWidth="270.0" promptText="Wybierz termin" />
       <Label fx:id="AddTerminError" alignment="CENTER" layoutX="67.0" layoutY="253.0" prefHeight="18.0" prefWidth="270.0" textFill="RED" visible="false" />
-      <TextField fx:id="NameTermin" layoutX="65.0" layoutY="228.0" prefHeight="25.0" prefWidth="270.0" />
+      <TextField fx:id="NameTermin" layoutX="65.0" layoutY="228.0" prefHeight="25.0" prefWidth="270.0" promptText="Wprowadz nazwe" />
     </children>
 </AnchorPane>

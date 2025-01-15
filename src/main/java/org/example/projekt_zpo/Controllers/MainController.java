@@ -2,6 +2,7 @@ package org.example.projekt_zpo.Controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,12 +14,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.example.projekt_zpo.Grupa;
-import org.example.projekt_zpo.Student;
-import org.example.projekt_zpo.Termin;
+import org.example.projekt_zpo.*;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -28,69 +28,71 @@ import java.util.Objects;
 
 public class MainController {
     @FXML
-    public Button AddStudent;
-
+    public Button addStudentButton, addTerminButton, deleteTerminButton, deleteStudentButton, logOutButton, deleteStudentFromDatabaseButton, addStudentToDatabaseButton, addGroupButton, setAttendanceForStudentButton;
     @FXML
-    public Button AddTermin;
+    public ImageView deleteGroupImageView;
     @FXML
-    public Button DeleteTermin;
+    public ChoiceBox<String> groupChoiceTerminChoiceBox;
     @FXML
-    public ImageView DeleteGroup;
+    public Label userNameLabel, groupNameLabel, terminNameLabel;
     @FXML
-    public Button DeleteStudent;
-
+    public TableView<Grupa> groupTableView;
     @FXML
-    public ChoiceBox GroupChoiceTermin;
-
-    @FXML
-    public Label UserName;
-
-    @FXML
-    public Label GroupNameLabel;
-
-    @FXML
-    public Button LogOutButton;
-    @FXML
-    public TableView<Grupa> GroupTable;
+    public TableView<StudentListaObecnosci> studentsTableView;
     @FXML
     public TableColumn<Grupa, String> groupColumn;
     @FXML
-    public TableColumn<Student, Integer> StudentIndex;
-    @FXML
-    public TableColumn<Student, String> StudentName;
-    @FXML
-    public TableColumn<Student, String> StudentSurname;
+    public TableColumn<StudentListaObecnosci, String> studentIndexColumn, attendanceColumn, studentNameColumn, studentSurnameColumn;
 
-    @FXML
-    public TableView<Student> StudentsTable;
-
-    @FXML
-    private Button AddGroupButton;
+    public HttpClient client = HttpClient.newHttpClient();
 
     public static int prowadzacyId;
-
     int actualGroup = 0;
-
+    //jak to nazwać XD
     public int isAlive = 0;
 
     public static ArrayList<Student> actualStudents;
+    public static ArrayList<Termin> actualTerms;
+    public static ArrayList<StudentListaObecnosci> actualStudentsWithAttendance;
+    public Termin actualTerm;
 
     public void initialize(){
 
-        GroupTable.setOnMouseClicked(event ->
+        groupTableView.setOnMouseClicked(event ->
         {
             if (event.getClickCount() == 1) {
-                Grupa selectedGroup = GroupTable.getSelectionModel().getSelectedItem();
+                Grupa selectedGroup = groupTableView.getSelectionModel().getSelectedItem();
                 actualGroup = selectedGroup.getId();
                 try {
-                    showStudentsInGroup();
-                } catch (IOException e) {
+                    setTermsForGroup();
+                    System.out.println(actualTerms.size());
+                    if (!actualTerms.isEmpty()) {
+                        showStudentsInGroup();
+                    }
+                } catch (IOException | URISyntaxException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println(actualGroup);
-                setTitle(selectedGroup);
+                setActualGroupTitle(selectedGroup);
             }
         });
+
+        groupChoiceTerminChoiceBox.setOnAction(event -> {
+            String selectedTermin = groupChoiceTerminChoiceBox.getValue().toString();
+            for (Termin termin : actualTerms) {
+                if (termin.getData().equals(selectedTermin)) {
+                    actualTerm = termin;
+                    break;
+                }
+            }
+        });
+    }
+
+    public void refreshAll() {
+
+    }
+
+    public void refreshActualGroup() {
+
     }
 
     public void setActualGroup(int id) {
@@ -98,61 +100,96 @@ public class MainController {
     }
 
     public void setUserName(String userName, String userLastName) {
-        UserName.setText(userName + " " + userLastName);
+        userNameLabel.setText(userName + " " + userLastName);
     }
 
-    public void setTitleAndIcon(String title, Stage stage) {
+    public void setTitleAndIconForWindow(String title, Stage stage) {
         stage.setTitle(title);
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/app_icon.png")).toExternalForm());
         stage.getIcons().add(image);
     }
 
+    void setActualGroupTitle(Grupa selectedGroup) {
+        groupNameLabel.setText(selectedGroup.getNazwa());
+    }
+
     public void setColumns() {
         groupColumn.setCellValueFactory(new PropertyValueFactory<>("nazwa"));
-        StudentIndex.setCellValueFactory(new PropertyValueFactory<>("indeks"));
-        StudentName.setCellValueFactory(new PropertyValueFactory<>("imie"));
-        StudentSurname.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
+        studentIndexColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStudentIndexToString()));
+        studentNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStudentNameToString()));
+        studentSurnameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStudentSurnameToString()));
+        attendanceColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAttendanceToString()));
     }
 
-    public void setTerminsForGroup(){
-        GroupChoiceTermin.getItems().clear();
-        ArrayList<Termin> arrayList = getActualTermins();
+    public void setTermsForGroup() throws URISyntaxException, IOException, InterruptedException {
+        groupChoiceTerminChoiceBox.getItems().clear();
+        ArrayList<Termin> terminy = getActualTerms();
+        for (Termin termin : terminy) {
+            if (!terminy.isEmpty()) {
+                groupChoiceTerminChoiceBox.setValue(termin.getData().toString());
+                terminNameLabel.setText(termin.getNazwa());
+            }
+            groupChoiceTerminChoiceBox.getItems().add(termin.getData().toString());
+        }
     }
 
-    public ArrayList<Termin> getActualTermins() {
-        ArrayList<Termin> grupy = null;
+    public ArrayList<StudentListaObecnosci> getActualStudentsWithAttendance() {
+        ArrayList<StudentListaObecnosci> studentsWithAttendance = new ArrayList<>();
+        for (Student student : actualStudents) {
+            StudentListaObecnosci temp = new StudentListaObecnosci();
+            temp.setStudent(student);
+            temp.setAttendance(getAttendanceForStudentInTerm(student.getIndeks()));
+            studentsWithAttendance.add(temp);
+        }
+        return studentsWithAttendance;
+    }
+
+    public Obecnosc getAttendanceForStudentInTerm(int idStudenta) {
+        Obecnosc attendance = null;
         try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestTerminy = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/grupy"))
-                    .GET()
-                    .build();
-            HttpResponse<String> responseTerimy = client.send(requestTerminy, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = requestGet("http://localhost:8080/api/sprawdzobecnoscstudenta?studentId=" + idStudenta + "&terminId=" + actualTerm.getId());
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                grupy = (ArrayList<Termin>) mapper.readValue(responseTerimy.body(), new TypeReference<List<Termin>>() {
-                });
+                attendance = mapper.readValue(response.body(), Obecnosc.class);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return grupy;
+        return attendance;
+    }
+
+    public HttpResponse<String> requestGet(String uri) throws URISyntaxException, IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder().uri(new URI(uri)).GET().build();
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    public ArrayList<Termin> getActualTerms() throws URISyntaxException, IOException, InterruptedException {
+        ArrayList<Termin> terms = null;
+        HttpResponse<String> response = requestGet("http://localhost:8080/api/termingrupa?grupaId=" + actualGroup);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            terms = (ArrayList<Termin>) mapper.readValue(response.body(), new TypeReference<List<Termin>>() {
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        actualTerms = terms;
+        assert actualTerms != null;
+        if (!actualTerms.isEmpty()) {
+            actualTerm = terms.getFirst();
+        }
+        return terms;
     }
 
     public ArrayList<Grupa> getGroups() {
-        ArrayList<Grupa> grupy = null;
+        ArrayList<Grupa> groups = null;
         try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestGrupy = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/grupy"))
-                    .GET()
-                    .build();
-            HttpResponse<String> responseGrupy = client.send(requestGrupy, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = requestGet("http://localhost:8080/api/grupy");
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                grupy = (ArrayList<Grupa>) mapper.readValue(responseGrupy.body(), new TypeReference<List<Grupa>>() {
+                groups = (ArrayList<Grupa>) mapper.readValue(response.body(), new TypeReference<List<Grupa>>() {
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -160,93 +197,67 @@ public class MainController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return grupy;
+        return groups;
     }
 
     public ArrayList<Student> getStudents() {
         ArrayList<Student> students = null;
         try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestGrupy = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/studencigrupa?grupaId=" + actualGroup))
-                    .GET()
-                    .build();
-            HttpResponse<String> responseGrupy = client.send(requestGrupy, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = requestGet("http://localhost:8080/api/studencigrupa?grupaId=" + actualGroup);
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                students = (ArrayList<Student>) mapper.readValue(responseGrupy.body(), new TypeReference<List<Student>>() {});
+                students = (ArrayList<Student>) mapper.readValue(response.body(), new TypeReference<List<Student>>() {
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        actualStudents = students;
         return students;
     }
 
     public void showStudentsInGroup() throws IOException {
-        ArrayList<Student> students = getStudents();
-        actualStudents = students;
-        ObservableList<Student> studentsList = FXCollections.observableArrayList(students);
-        for (int i = 0; i < studentsList.size(); i++) {
-            studentsList.set(i, students.get(i));
+        actualStudents = getStudents();
+        ArrayList<StudentListaObecnosci> studentsWithAttendance = getActualStudentsWithAttendance();
+        actualStudentsWithAttendance = studentsWithAttendance;
+        if (!actualStudentsWithAttendance.isEmpty()) {
+            ObservableList<StudentListaObecnosci> studentsList = FXCollections.observableArrayList(studentsWithAttendance);
+            for (int i = 0; i < studentsList.size(); i++) {
+                studentsList.set(i, studentsWithAttendance.get(i));
+            }
+            studentsTableView.setItems(studentsList);
         }
-        StudentsTable.setItems(studentsList);
     }
 
     public void showGroupList() {
-        ArrayList<Grupa> grupy = getGroups();
-        ObservableList<Grupa> grupyList = FXCollections.observableArrayList(grupy);
+        ArrayList<Grupa> groups = getGroups();
+        ObservableList<Grupa> grupyList = FXCollections.observableArrayList(groups);
         for (int i = 0; i < grupyList.size(); i++) {
             if (isAlive == 0) {
-                setActualGroup(grupy.get(i).getId());
-                setTitle(grupy.get(i));
+                setActualGroup(groups.get(i).getId());
+                setActualGroupTitle(groups.get(i));
                 isAlive = 1;
             }
-            grupyList.set(i, grupy.get(i));
+            grupyList.set(i, groups.get(i));
         }
-        GroupTable.setItems(grupyList);
+        groupTableView.setItems(grupyList);
     }
 
-    public void showStudentsAttendanceInTermin() throws IOException {
-    }
-
-    public void logout(MouseEvent mouseEvent) {
-        Stage stage = (Stage) LogOutButton.getScene().getWindow();
+    public void logOut(MouseEvent mouseEvent) {
+        Stage stage = (Stage) logOutButton.getScene().getWindow();
         stage.close();
     }
 
-    void setTitle(Grupa selectedGroup) {
-        GroupNameLabel.setText(selectedGroup.getNazwa());
-            /*Attendence.setCellFactory(column -> new TableCell<>() {
-                private final ChoiceBox<String> choiceBox = new ChoiceBox<>();
-                {
-                    choiceBox.getItems().addAll("Obecny", "Nieobecny", "Spóźniony", "Usprawiedliwiony");
-                    choiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
-                        if (newValue != null) {
-                            Student student = getTableView().getItems().get(getIndex());
-                            System.out.println("Wybrano: " + newValue + " dla indexu: " + student.getIndeks());
-                        }
-                    });
-                }
-            });*/
-    }
-
-
-
-    public void deleteGroup(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/ConfirmDeleteGroup.fxml"));
+    public void openDeleteGroupWindow(MouseEvent mouseEvent) throws IOException {
         Stage stage = new Stage();
-        Scene scene = new Scene(fxmlLoader.load());
-        ConfirmDeleteGroupController controller = fxmlLoader.getController();
-        controller.setMainController(this);
-        controller.setGroupID(actualGroup);
+        Scene scene = loadScene("/org/example/projekt_zpo/ConfirmDeleteGroup.fxml");
+        ConfirmDeleteGroupController.mainController = this;
+        ConfirmDeleteGroupController.groupID = actualGroup;
         stage.setScene(scene);
-        setTitleAndIcon("Usuń Grupe", stage);
-        Stage ownerStage = (Stage) DeleteGroup.getScene().getWindow();
-        stage.initOwner(ownerStage);
-        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        setTitleAndIconForWindow("Usuń Grupe", stage);
+        blockWindow((Stage) deleteGroupImageView.getScene().getWindow(), stage);
     }
 
     public void openDeleteStudentWindow(MouseEvent mouseEvent) throws IOException {
@@ -254,68 +265,94 @@ public class MainController {
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        setTitleAndIcon("Usuń Studenta", stage);
-        Stage ownerStage = (Stage) DeleteStudent.getScene().getWindow();
+        setTitleAndIconForWindow("Usuń Studenta", stage);
         DeleteStudentController.mainController = this;
         DeleteStudentController.students = actualStudents;
         DeleteStudentController controller = fxmlLoader.getController();
         controller.setStudents();
-        stage.initOwner(ownerStage);
-        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        blockWindow((Stage) deleteStudentButton.getScene().getWindow(), stage);
     }
 
-    public void openAddTerminWindow(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/AddTermin.fxml"));
+    public void openAddTermWindow(MouseEvent mouseEvent) throws IOException {
         Stage stage = new Stage();
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = loadScene("/org/example/projekt_zpo/AddTermin.fxml");
         stage.setScene(scene);
-        setTitleAndIcon("Dodaj Termin", stage);
-        Stage ownerStage = (Stage) AddTermin.getScene().getWindow();
+        setTitleAndIconForWindow("Dodaj Termin", stage);
         AddTerminController.mainController = this;
         AddTerminController.grupaID = actualGroup;
         AddTerminController.prowadzacyId = prowadzacyId;
-        stage.initOwner(ownerStage);
-        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        blockWindow((Stage) addTerminButton.getScene().getWindow(), stage);
     }
 
-    public void openDeleteTerminWindow(MouseEvent mouseEvent) throws IOException {
+    public void openDeleteTermWindow(MouseEvent mouseEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/DeleteTermin.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        setTitleAndIcon("Usuń Termin", stage);
-        Stage ownerStage = (Stage) DeleteTermin.getScene().getWindow();
-        stage.initOwner(ownerStage);
-        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        DeleteTerminController controller = fxmlLoader.getController();
+        setTitleAndIconForWindow("Usuń Termin", stage);
+        DeleteTerminController.mainController = this;
+        DeleteTerminController.terminy = actualTerms;
+        controller.showTerminy();
+        blockWindow((Stage) deleteTerminButton.getScene().getWindow(), stage);
     }
 
     public void openAddStudentWindow(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/AddStudent.fxml"));
         Stage stage = new Stage();
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = loadScene("/org/example/projekt_zpo/AddStudent.fxml");
         AddStudentController.groupID = actualGroup;
         AddStudentController.mainController = this;
         stage.setScene(scene);
-        setTitleAndIcon("Dodaj Studenta", stage);
-        Stage ownerStage = (Stage) AddStudent.getScene().getWindow();
-        stage.initOwner(ownerStage);
-        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        setTitleAndIconForWindow("Dodaj Studenta", stage);
+        blockWindow((Stage) addStudentButton.getScene().getWindow(), stage);
     }
 
     public void openAddGroupWindow(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/AddGroup.fxml"));
         Stage stage = new Stage();
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = loadScene("/org/example/projekt_zpo/AddGroup.fxml");
         AddGroupController.mainController = this;
         stage.setScene(scene);
-        setTitleAndIcon("Dodaj Grupę", stage);
-        Stage ownerStage = (Stage) AddGroupButton.getScene().getWindow();
-        stage.initOwner(ownerStage);
-        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        stage.showAndWait();
+        setTitleAndIconForWindow("Dodaj Grupę", stage);
+        blockWindow((Stage) addGroupButton.getScene().getWindow(), stage);
+    }
+
+    public void openSetAttendanceForStudentWindow(MouseEvent mouseEvent) throws IOException {
+        Stage stage = new Stage();
+        Scene scene = loadScene("/org/example/projekt_zpo/SetAttendanceForStudent.fxml");
+        AddGroupController.mainController = this;
+        stage.setScene(scene);
+        setTitleAndIconForWindow("Ustaw Obecość", stage);
+        blockWindow((Stage) setAttendanceForStudentButton.getScene().getWindow(), stage);
+    }
+
+    public void openAddStudentToDatabaseWindow(MouseEvent mouseEvent) throws IOException {
+        Stage stage = new Stage();
+        Scene scene = loadScene("/org/example/projekt_zpo/AddStudentToDatabase.fxml");
+        AddGroupController.mainController = this;
+        stage.setScene(scene);
+        setTitleAndIconForWindow("Dodaj studenta do Bazy Danych", stage);
+        DeleteStudentFromDatabaseController.mainController = this;
+        blockWindow((Stage) addStudentToDatabaseButton.getScene().getWindow(), stage);
+    }
+
+    public void openDeleteStudentFromDatabaseWindow(MouseEvent mouseEvent) throws IOException {
+        Stage stage = new Stage();
+        Scene scene = loadScene("/org/example/projekt_zpo/DeleteStudentFromDatabase.fxml");
+        AddGroupController.mainController = this;
+        stage.setScene(scene);
+        setTitleAndIconForWindow("Usuń studenta z Bazy Danych", stage);
+        DeleteStudentFromDatabaseController.mainController = this;
+        blockWindow((Stage) deleteStudentFromDatabaseButton.getScene().getWindow(), stage);
+    }
+
+    public void blockWindow(Stage ownerStage, Stage newWindowStage) {
+        newWindowStage.initOwner(ownerStage);
+        newWindowStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+        newWindowStage.showAndWait();
+    }
+
+    public Scene loadScene(String scenePath) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(scenePath));
+        return new Scene(fxmlLoader.load());
     }
 }

@@ -1,18 +1,21 @@
 package org.example.projekt_zpo.Controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.example.projekt_zpo.Termin;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
 
 public class DeleteTerminController {
     @FXML
@@ -22,39 +25,49 @@ public class DeleteTerminController {
     public Button DeleteTerminButton;
 
     @FXML
-    public Label AddStudentErrorLabel;
-
-    @FXML
-    public ChoiceBox ChoseTermin;
+    public  ChoiceBox ChoseTermin;
 
     @FXML
     public Label DeleteTerminError;
+
+    public static ArrayList<Termin> terminy;
+    public static MainController mainController;
+
+    public void showTerminy(){
+        ChoseTermin.getItems().clear();
+        for(Termin termin : terminy){
+            ChoseTermin.getItems().add(termin.getData());
+        }
+    }
 
     public void cancel(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
-    public void delete(MouseEvent mouseEvent) throws IOException {
+    public void delete(MouseEvent mouseEvent) throws IOException, InterruptedException, URISyntaxException {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        if (ChoseTermin.getSelectionModel().getSelectedItem() == null) {
+        if (ChoseTermin.getValue() == "Wybierz Termin") {
             DeleteTerminError.setVisible(true);
             DeleteTerminError.setText("Nie wybrano Terminu!");
         }
         else {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/projekt_zpo/ConfirmDeleteTermin.fxml"));
-            Stage confirmStage = new Stage();
-            Scene scene = new Scene(fxmlLoader.load());
-            confirmStage.setScene(scene);
-            setTitleAndIcon("Usuń Termin", confirmStage);
+            int id = 0;
+            for(Termin termin : terminy) {
+                if (termin.getData().equals(ChoseTermin.getValue())) {
+                    id = termin.getId();
+                    break;
+                }
+            }
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest requestAddGrupa = HttpRequest.newBuilder()
+                    .uri(new URI("http://localhost:8080/api/usuntermin?terminId=" + id))
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .POST(HttpRequest.BodyPublishers.ofString(""))
+                    .build();
+            HttpResponse<String> responseAddGrupa = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
+            mainController.setTermsForGroup();
             stage.close();
-            confirmStage.show();
         }
-    }
-
-    public void setTitleAndIcon(String title, Stage stage) {
-        stage.setTitle(title);
-        Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/app_icon.png")).toExternalForm());
-        stage.getIcons().add(image);
     }
 }

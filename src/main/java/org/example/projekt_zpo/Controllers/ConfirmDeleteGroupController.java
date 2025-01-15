@@ -22,8 +22,8 @@ public class ConfirmDeleteGroupController {
 
     @FXML
     public Button DeleteGroupConfirmationButton;
-    private int groupID;
-    private MainController mainController;
+    public static int groupID;
+    public static MainController mainController;
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
