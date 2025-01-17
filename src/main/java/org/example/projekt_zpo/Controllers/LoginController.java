@@ -139,18 +139,30 @@ public class LoginController {
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
-
-            HttpResponse<String> responseProwadzacy = client.send(requestLogin, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> responseProwadzacy = null;
+            boolean isServerResponding = false;
             try{
-                ObjectMapper mapper = new ObjectMapper();
-                prowadzacy = mapper.readValue(responseProwadzacy.body(), Prowadzacy.class);
-                isLoggedIn = true;
+                responseProwadzacy = client.send(requestLogin, HttpResponse.BodyHandlers.ofString());
+                isServerResponding = true;
             }
             catch (Exception e){
                 PasswordField.setText("");
                 LoginTextArea.setText("");
                 WrongParametersError.setVisible(true);
-                WrongParametersError.setText("Błędne Dane Logowania!");
+                WrongParametersError.setText("Serwer nie odpowiada!");
+            }
+            if(isServerResponding){
+                try{
+                    ObjectMapper mapper = new ObjectMapper();
+                    prowadzacy = mapper.readValue(responseProwadzacy.body(), Prowadzacy.class);
+                    isLoggedIn = true;
+                }
+                catch (Exception e){
+                    PasswordField.setText("");
+                    LoginTextArea.setText("");
+                    WrongParametersError.setVisible(true);
+                    WrongParametersError.setText("Błędne Dane Logowania!");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
