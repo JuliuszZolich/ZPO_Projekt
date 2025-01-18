@@ -2,7 +2,6 @@ package org.example.projekt_zpo.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -15,31 +14,15 @@ import java.net.http.HttpResponse;
 
 public class ConfirmDeleteGroupController {
     @FXML
-    public Label ConfirmationLabel;
+    public Button cancelButton;
 
     @FXML
-    public Button CancelDeleteGroupConfirmation;
-
-    @FXML
-    public Button DeleteGroupConfirmationButton;
+    public Button deleteGroupButton;
     public static int groupID;
     public static MainController mainController;
 
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
-    public void setGroupID(int groupID) {
-        this.groupID = groupID;
-    }
-
-    public void cancel(MouseEvent mouseEvent) {
-        Stage stage = (Stage) CancelDeleteGroupConfirmation.getScene().getWindow();
-        stage.close();
-    }
-
     public void delete(MouseEvent mouseEvent) throws URISyntaxException, IOException, InterruptedException {
-        Stage stage = (Stage) CancelDeleteGroupConfirmation.getScene().getWindow();
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest requestDeleteGrupa = HttpRequest.newBuilder()
                 .uri(new URI("http://localhost:8080/api/usungrupe?grupaId=" + groupID))

@@ -35,19 +35,19 @@ public class LoginController {
 
     /** Pole gdzie użytkownik wprowadza login */
     @FXML
-    public TextArea LoginTextArea;
+    public TextArea loginTextArea;
 
     /** Przycisk logowania */
     @FXML
-    public Button LoginButton;
+    public Button loginButton;
 
     /** Pole gdzie wyświetlają się błędy przy logowaniu */
     @FXML
-    public Label WrongParametersError;
+    public Label errorLabel;
 
     /** Pole gdzie użytkownik wprowadza hasło */
     @FXML
-    public PasswordField PasswordField;
+    public PasswordField passwordField;
 
     /**
      * Metoda odpowiedzialna za logowanie użytkownika po naciśnięciu przycisku logowania.
@@ -58,9 +58,9 @@ public class LoginController {
      */
     public void loginUser(MouseEvent mouseEvent) throws IOException, URISyntaxException, InterruptedException {
         Prowadzacy prowadzacy = null;
-        Stage loginStage = (Stage) LoginButton.getScene().getWindow();
-        String username = LoginTextArea.getText();
-        String password = PasswordField.getText();
+        Stage loginStage = (Stage) loginButton.getScene().getWindow();
+        String username = loginTextArea.getText();
+        String password = passwordField.getText();
         if (assertLoginData(username, password)){
            prowadzacy = login(username, password, null);
            if (isLoggedIn) {
@@ -114,10 +114,10 @@ public class LoginController {
      */
     public boolean assertLoginData(String login, String password) {
         if (login.isBlank() || password.isBlank()) {
-            PasswordField.setText("");
-            LoginTextArea.setText("");
-            WrongParametersError.setVisible(true);
-            WrongParametersError.setText("Nie podano Loginu lub hasła!");
+            passwordField.setText("");
+            loginTextArea.setText("");
+            errorLabel.setVisible(true);
+            errorLabel.setText("Nie podano Loginu lub hasła!");
             return false;
         }
         return true;
@@ -147,10 +147,10 @@ public class LoginController {
                 isServerResponding = true;
             }
             catch (Exception e){
-                PasswordField.setText("");
-                LoginTextArea.setText("");
-                WrongParametersError.setVisible(true);
-                WrongParametersError.setText("Serwer nie odpowiada!");
+                passwordField.setText("");
+                loginTextArea.setText("");
+                errorLabel.setVisible(true);
+                errorLabel.setText("Serwer nie odpowiada!");
             }
             if(isServerResponding){
                 try{
@@ -161,9 +161,9 @@ public class LoginController {
                 catch (Exception e){
                     ObjectMapper mapper = new ObjectMapper();
                     Error error = mapper.readValue(responseProwadzacy.body(), Error.class);
-                    PasswordField.setText("");
-                    LoginTextArea.setText("");
-                    error.setLabelMessage(WrongParametersError);
+                    passwordField.setText("");
+                    loginTextArea.setText("");
+                    error.setLabelMessage(errorLabel);
                 }
             }
         } catch (Exception e) {

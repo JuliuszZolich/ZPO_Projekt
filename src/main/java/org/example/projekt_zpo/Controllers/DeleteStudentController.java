@@ -1,6 +1,5 @@
 package org.example.projekt_zpo.Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
@@ -22,15 +21,15 @@ public class DeleteStudentController {
 
     public static ArrayList<Student> students;
     @FXML
-    public ChoiceBox ChoseStudent;
+    public ChoiceBox<Integer> choseStudent;
 
     @FXML
-    public Label DeleteStudentError;
+    public Label errorLabel;
 
     public void setStudents() {
-        ChoseStudent.getItems().clear();
+        choseStudent.getItems().clear();
         for (Student student : students) {
-            ChoseStudent.getItems().add(student.getIndeks());
+            choseStudent.getItems().add(student.getIndeks());
         }
     }
 
@@ -41,10 +40,10 @@ public class DeleteStudentController {
 
     public void delete(MouseEvent mouseEvent) throws URISyntaxException, IOException, InterruptedException {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        String studentIndex = ChoseStudent.getValue().toString();
+        String studentIndex = choseStudent.getValue().toString();
         if(studentIndex.equals("Wybierz Studenta")){
-            DeleteStudentError.setVisible(true);
-            DeleteStudentError.setText("Nie wybrano studenta");
+            errorLabel.setVisible(true);
+            errorLabel.setText("Nie wybrano studenta");
         }
         else{
             HttpClient client = HttpClient.newHttpClient();

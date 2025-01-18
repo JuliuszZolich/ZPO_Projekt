@@ -7,17 +7,17 @@ import javafx.stage.Stage;
 
 public class SetAttendanceForStudentController {
     @FXML
-    public ChoiceBox ChoiceStudent;
+    public ChoiceBox choiceStudent;
     @FXML
-    public ChoiceBox ChoiceAttendance;
+    public ChoiceBox choiceAttendance;
 
     public void cancel(MouseEvent mouseEvent) {
-        Stage stage = (Stage) ChoiceStudent.getScene().getWindow();
+        Stage stage = (Stage) choiceStudent.getScene().getWindow();
         stage.close();
     }
 
     public void set(MouseEvent mouseEvent) {
-        Stage stage = (Stage) ChoiceStudent.getScene().getWindow();
+        Stage stage = (Stage) choiceStudent.getScene().getWindow();
         stage.close();
     }
 }

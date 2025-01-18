@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.AddStudentController">
+<AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.AddStudentToGroupController">
    <children>
       <Label layoutX="68.0" layoutY="36.0" text="Dodaj Studenta">
          <font>
@@ -18,9 +18,9 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="AddStudentIndex" layoutX="64.0" layoutY="138.0" prefWidth="270.0" promptText="Index" />
+      <TextField fx:id="addStudentIndex" layoutX="64.0" layoutY="138.0" prefWidth="270.0" promptText="Index" />
       <Button fx:id="CancelAddStudentButton" layoutX="87.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
       <Button fx:id="AddStudentButton" layoutX="223.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
-      <Label fx:id="AddStudentErrorLabel" layoutX="164.0" layoutY="173.0" text="Błędny Index!" textFill="#c70505" underline="true" visible="false" />
+      <Label fx:id="errorLabel" layoutX="164.0" layoutY="173.0" text="Błędny Index!" textFill="#c70505" underline="true" visible="false" />
    </children>
 </AnchorPane>

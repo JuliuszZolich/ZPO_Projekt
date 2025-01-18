@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.AddTerminController">
+<AnchorPane prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.AddTermForGroupController">
     <children>
         <Label layoutX="85.0" layoutY="38.0" text="Dodaj Termin">
             <font>
@@ -24,10 +24,10 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Button fx:id="CancelAddTerminButton" layoutX="90.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
-        <Button fx:id="AddTerminButton" layoutX="220.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
-      <DatePicker fx:id="ChoseTermin" layoutX="65.0" layoutY="149.0" prefHeight="26.0" prefWidth="270.0" promptText="Wybierz termin" />
-      <Label fx:id="AddTerminError" alignment="CENTER" layoutX="67.0" layoutY="253.0" prefHeight="18.0" prefWidth="270.0" textFill="RED" visible="false" />
-      <TextField fx:id="NameTermin" layoutX="65.0" layoutY="228.0" prefHeight="25.0" prefWidth="270.0" promptText="Wprowadz nazwe" />
+        <Button fx:id="cancelButton" layoutX="90.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
+        <Button fx:id="addTermButton" layoutX="220.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
+      <DatePicker fx:id="choseTerm" layoutX="65.0" layoutY="149.0" prefHeight="26.0" prefWidth="270.0" promptText="Wybierz termin" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="67.0" layoutY="253.0" prefHeight="18.0" prefWidth="270.0" textFill="RED" visible="false" />
+      <TextField fx:id="termNameTextArea" layoutX="65.0" layoutY="228.0" prefHeight="25.0" prefWidth="270.0" promptText="Wprowadz nazwe" />
     </children>
 </AnchorPane>

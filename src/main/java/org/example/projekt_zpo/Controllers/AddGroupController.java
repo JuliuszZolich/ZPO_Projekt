@@ -20,16 +20,16 @@ public class AddGroupController {
     public static MainController mainController;
 
     @FXML
-    public TextField GroupNameTextArea;
+    public TextField groupNameTextArea;
 
     @FXML
-    public Button CancelAddGroupButton;
+    public Button cancelAddGroupButton;
 
     @FXML
-    public Button AddGroupButton;
+    public Button addGroupButton;
 
     @FXML
-    public Label ErrorMessageLabel;
+    public Label errorLabel;
 
     public void close(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
@@ -38,16 +38,13 @@ public class AddGroupController {
 
     public void add(MouseEvent mouseEvent) throws URISyntaxException, IOException, InterruptedException {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        String groupName = GroupNameTextArea.getText();
+        String groupName = groupNameTextArea.getText();
         if (groupName.isBlank()) {
-            ErrorMessageLabel.setText("Nie podano nazwy grupy!");
-            ErrorMessageLabel.setVisible(true);
-            GroupNameTextArea.setText("");
-        } else if (groupName.length() > 40) {
-            ErrorMessageLabel.setText("Za długa nazwa grupy!");
-            ErrorMessageLabel.setVisible(true);
-            GroupNameTextArea.setText("");
-        } else {
+            errorLabel.setText("Nie podano nazwy grupy!");
+            errorLabel.setVisible(true);
+            groupNameTextArea.setText("");
+        }
+        else{
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestAddGrupa = HttpRequest.newBuilder()
                     .uri(new URI("http://localhost:8080/api/dodajgrupe?nazwa=" + URLEncoder.encode(groupName, StandardCharsets.UTF_8)))

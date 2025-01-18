@@ -15,21 +15,21 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
-public class AddTerminController {
+public class AddTermForGroupController {
     @FXML
-    public Button CancelAddTerminButton;
+    public Button cancelButton;
 
     @FXML
-    public Button AddTerminButton;
+    public Button addTermButton;
 
     @FXML
-    public DatePicker ChoseTermin;
+    public DatePicker choseTerm;
 
     @FXML
-    public Label AddTerminError;
+    public Label errorLabel;
 
     @FXML
-    public TextField NameTermin;
+    public TextField termNameTextArea;
 
     public static int grupaID;
 
@@ -44,21 +44,21 @@ public class AddTerminController {
 
     public void add(MouseEvent mouseEvent) throws URISyntaxException, IOException, InterruptedException {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        if(ChoseTermin.getValue() == null) {
-            AddTerminError.setVisible(true);
-            AddTerminError.setText("Nie wybrano Terminu");
+        if(choseTerm.getValue() == null) {
+            errorLabel.setVisible(true);
+            errorLabel.setText("Nie wybrano Terminu");
         }
-        else if (NameTermin.getText() == null) {
-            AddTerminError.setVisible(true);
-            AddTerminError.setText("Nie wpisano nazwy Terminu");
+        else if (termNameTextArea.getText() == null) {
+            errorLabel.setVisible(true);
+            errorLabel.setText("Nie wpisano nazwy Terminu");
         }
-        else if(NameTermin.getText().length() > 5){
-            AddTerminError.setVisible(true);
-            AddTerminError.setText("Za długa nazwa Terminu");
+        else if(termNameTextArea.getText().length() > 20){
+            errorLabel.setVisible(true);
+            errorLabel.setText("Za długa nazwa Terminu");
         }
         else{
-            String chosenDate = ChoseTermin.getValue().toString();
-            String name = NameTermin.getText();
+            String chosenDate = choseTerm.getValue().toString();
+            String name = termNameTextArea.getText();
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestAddTermin =  HttpRequest.newBuilder()
                     .uri(new URI("http://localhost:8080/api/dodajtermin?grupaId=" + grupaID + "&nazwa=" + URLEncoder.encode(name, StandardCharsets.UTF_8) + "&data=" + chosenDate + "&prowadzacyId=" + prowadzacyId))

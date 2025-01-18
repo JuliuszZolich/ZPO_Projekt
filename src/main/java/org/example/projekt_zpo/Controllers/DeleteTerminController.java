@@ -16,27 +16,29 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Objects;
 
 public class DeleteTerminController {
     @FXML
-    public Button CancelDeleteTerminButton;
+    public Button cancelButton;
 
     @FXML
-    public Button DeleteTerminButton;
+    public Button deleteTermButton;
 
     @FXML
-    public  ChoiceBox ChoseTermin;
+    public  ChoiceBox<String> choseTerm;
 
     @FXML
-    public Label DeleteTerminError;
+    public Label errorLabel;
 
-    public static ArrayList<Termin> terminy;
+    public static ArrayList<Termin> terms;
     public static MainController mainController;
 
-    public void showTerminy(){
-        ChoseTermin.getItems().clear();
-        for(Termin termin : terminy){
-            ChoseTermin.getItems().add(termin.getData());
+    public void showTerms(){
+        choseTerm.getItems().clear();
+        for(Termin termin : terms){
+            choseTerm.getItems().add(termin.getData().toString());
         }
     }
 
@@ -47,14 +49,14 @@ public class DeleteTerminController {
 
     public void delete(MouseEvent mouseEvent) throws IOException, InterruptedException, URISyntaxException {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        if (ChoseTermin.getValue() == "Wybierz Termin") {
-            DeleteTerminError.setVisible(true);
-            DeleteTerminError.setText("Nie wybrano Terminu!");
+        if (Objects.equals(choseTerm.getValue(), "Wybierz Termin")) {
+            errorLabel.setVisible(true);
+            errorLabel.setText("Nie wybrano Terminu!");
         }
         else {
             int id = 0;
-            for(Termin termin : terminy) {
-                if (termin.getData().equals(ChoseTermin.getValue())) {
+            for(Termin termin : terms) {
+                if (termin.getData().equals(choseTerm.getValue())) {
                     id = termin.getId();
                     break;
                 }

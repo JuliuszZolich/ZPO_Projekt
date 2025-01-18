@@ -14,7 +14,6 @@ public class AttendenceList extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AttendenceList.class.getResource("LoginScene.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/StyleSheets/MainScene.css")).toExternalForm());
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/app_icon.png")).toExternalForm());
         stage.getIcons().add(image);
         stage.setTitle("Lista Obecności - Panel logowania");

@@ -3,13 +3,11 @@ package org.example.projekt_zpo.Controllers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.projekt_zpo.Student;
-import org.example.projekt_zpo.Termin;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,11 +20,9 @@ import java.util.List;
 
 public class DeleteStudentFromDatabaseController {
     @FXML
-    public Label DeleteStudentError;
+    public ChoiceBox<Integer> choseStudent;
     @FXML
-    public ChoiceBox ChoseStudent;
-    @FXML
-    public Label AddStudentErrorLabel;
+    public Label errorLabel;
 
     public static MainController mainController;
 
@@ -38,10 +34,10 @@ public class DeleteStudentFromDatabaseController {
                     .uri(new URI("http://localhost:8080/api/studenci"))
                     .GET()
                     .build();
-            HttpResponse<String> responseTerimy = client.send(requestTerminy, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> responseTerms = client.send(requestTerminy, HttpResponse.BodyHandlers.ofString());
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                students = (ArrayList<Student>) mapper.readValue(responseTerimy.body(), new TypeReference<List<Student>>() {
+                students = (ArrayList<Student>) mapper.readValue(responseTerms.body(), new TypeReference<List<Student>>() {
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -50,32 +46,32 @@ public class DeleteStudentFromDatabaseController {
             e.printStackTrace();
         }
         assert students != null;
-        ChoseStudent.getItems().clear();
+        choseStudent.getItems().clear();
         for(Student student : students){
-            ChoseStudent.getItems().add(student.getIndeks());
+            choseStudent.getItems().add(student.getIndeks());
         }
     }
 
     public void cancel(MouseEvent mouseEvent) {
-        Stage stage = (Stage) DeleteStudentError.getScene().getWindow();
+        Stage stage = (Stage) errorLabel.getScene().getWindow();
         stage.close();
     }
 
     public void delete(MouseEvent mouseEvent) throws IOException, InterruptedException, URISyntaxException {
-        Stage stage = (Stage) DeleteStudentError.getScene().getWindow();
-        String value = ChoseStudent.getValue().toString();
+        Stage stage = (Stage) errorLabel.getScene().getWindow();
+        String value = choseStudent.getValue().toString();
         if (value.equals("Wybierz Studenta")) {
-            AddStudentErrorLabel.setVisible(true);
-            AddStudentErrorLabel.setText("Nie wybrano studenta!");
+            errorLabel.setVisible(true);
+            errorLabel.setText("Nie wybrano studenta!");
         }
         else {
             HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestAddGrupa = HttpRequest.newBuilder()
+            HttpRequest requestDeleteStudentFromDatabase = HttpRequest.newBuilder()
                     .uri(new URI("http://localhost:8080/api/usunstudenta?id=" + value))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
-            HttpResponse<String> responseAddGrupa = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> responseDeleteStudentFromDatabase = client.send(requestDeleteStudentFromDatabase, HttpResponse.BodyHandlers.ofString());
             mainController.showStudentsInGroup();
         }
         stage.close();

@@ -278,9 +278,9 @@ public class MainController {
         Scene scene = loadScene("/org/example/projekt_zpo/AddTermin.fxml");
         stage.setScene(scene);
         setTitleAndIconForWindow("Dodaj Termin", stage);
-        AddTerminController.mainController = this;
-        AddTerminController.grupaID = actualGroup;
-        AddTerminController.prowadzacyId = prowadzacyId;
+        AddTermForGroupController.mainController = this;
+        AddTermForGroupController.grupaID = actualGroup;
+        AddTermForGroupController.prowadzacyId = prowadzacyId;
         blockWindow((Stage) addTerminButton.getScene().getWindow(), stage);
     }
 
@@ -292,16 +292,16 @@ public class MainController {
         DeleteTerminController controller = fxmlLoader.getController();
         setTitleAndIconForWindow("Usuń Termin", stage);
         DeleteTerminController.mainController = this;
-        DeleteTerminController.terminy = actualTerms;
-        controller.showTerminy();
+        DeleteTerminController.terms = actualTerms;
+        controller.showTerms();
         blockWindow((Stage) deleteTerminButton.getScene().getWindow(), stage);
     }
 
     public void openAddStudentWindow(MouseEvent mouseEvent) throws IOException {
         Stage stage = new Stage();
         Scene scene = loadScene("/org/example/projekt_zpo/AddStudent.fxml");
-        AddStudentController.groupID = actualGroup;
-        AddStudentController.mainController = this;
+        AddStudentToGroupController.groupID = actualGroup;
+        AddStudentToGroupController.mainController = this;
         stage.setScene(scene);
         setTitleAndIconForWindow("Dodaj Studenta", stage);
         blockWindow((Stage) addStudentButton.getScene().getWindow(), stage);

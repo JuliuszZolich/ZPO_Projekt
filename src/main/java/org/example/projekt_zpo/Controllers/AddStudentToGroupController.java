@@ -12,11 +12,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class AddStudentController {
+public class AddStudentToGroupController {
     @FXML
-    public Label AddStudentErrorLabel;
+    public Label errorLabel;
     @FXML
-    private TextField AddStudentIndex;
+    private TextField addStudentIndex;
     public static int groupID;
     public static MainController mainController;
 
@@ -28,11 +28,11 @@ public class AddStudentController {
     public void add(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         try {
-            int index = Integer.parseInt(AddStudentIndex.getText());
+            int index = Integer.parseInt(addStudentIndex.getText());
             if (index < 100000 || index > 999999) {
-                AddStudentErrorLabel.setVisible(true);
-                AddStudentIndex.setText("");
-                AddStudentErrorLabel.setText("Błędne dane!");
+                errorLabel.setVisible(true);
+                addStudentIndex.setText("");
+                errorLabel.setText("Błędne dane!");
             }
             else{
                 HttpClient client = HttpClient.newHttpClient();
@@ -47,9 +47,9 @@ public class AddStudentController {
             }
         }
         catch (NumberFormatException e) {
-            AddStudentErrorLabel.setVisible(true);
-            AddStudentIndex.setText("");
-            AddStudentErrorLabel.setText("Błędne dane!");
+            errorLabel.setVisible(true);
+            addStudentIndex.setText("");
+            errorLabel.setText("Błędne dane!");
         } catch (InterruptedException | URISyntaxException | IOException e) {
             throw new RuntimeException(e);
         }

@@ -18,10 +18,10 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="GroupNameTextArea" layoutX="66.0" layoutY="107.0" prefHeight="26.0" prefWidth="270.0" promptText="Nazwa Grupy" />
-      <Button fx:id="CancelAddGroupButton" layoutX="90.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#close" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
-      <Button fx:id="AddGroupButton" layoutX="220.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
-      <Label fx:id="ErrorMessageLabel" alignment="CENTER" layoutX="68.0" layoutY="146.0" prefHeight="17.0" prefWidth="270.0" textFill="RED" visible="false">
+      <TextField fx:id="groupNameTextArea" layoutX="66.0" layoutY="107.0" prefHeight="26.0" prefWidth="270.0" promptText="Nazwa Grupy" />
+      <Button fx:id="cancelAddGroupButton" layoutX="90.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#close" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
+      <Button fx:id="addGroupButton" layoutX="220.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="20.0" prefWidth="80.0" text="Dodaj" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="68.0" layoutY="146.0" prefHeight="17.0" prefWidth="270.0" textFill="RED" visible="false">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
