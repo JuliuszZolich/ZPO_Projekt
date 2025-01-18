@@ -13,8 +13,8 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TextField fx:id="NameTextArea" layoutX="83.0" layoutY="175.0" prefHeight="25.0" prefWidth="209.0" promptText="Wpisz Imię" />
-      <TextField fx:id="SurnameTextArea" layoutX="83.0" layoutY="255.0" prefHeight="25.0" prefWidth="209.0" promptText="Wpisz nazwisko" />
+      <TextField fx:id="nameTextArea" layoutX="83.0" layoutY="175.0" prefHeight="25.0" prefWidth="209.0" promptText="Wpisz Imię" />
+      <TextField fx:id="surnameTextArea" layoutX="83.0" layoutY="255.0" prefHeight="25.0" prefWidth="209.0" promptText="Wpisz nazwisko" />
       <Button fx:id="Cancel" layoutX="85.0" layoutY="396.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="25.0" prefWidth="78.0" text="Anuluj" />
       <Button fx:id="Add" layoutX="215.0" layoutY="396.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="25.0" prefWidth="78.0" text="Dodaj" />
       <Label layoutX="98.0" layoutY="220.0" text="Nazwisko:">
@@ -27,12 +27,12 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="IndeksTextArea" layoutX="84.0" layoutY="340.0" prefHeight="25.0" prefWidth="209.0" promptText="Wpisz indeks" />
+      <TextField fx:id="indexTextArea" layoutX="84.0" layoutY="340.0" prefHeight="25.0" prefWidth="209.0" promptText="Wpisz indeks" />
       <Label layoutX="98.0" layoutY="307.0" text="Indeks:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="ErrorLabel" alignment="CENTER" layoutX="50.0" layoutY="391.0" prefHeight="17.0" prefWidth="273.0" text="Błędne Dane" textFill="RED" visible="false" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="50.0" layoutY="391.0" prefHeight="17.0" prefWidth="273.0" text="Błędne Dane" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.projekt_zpo.Prowadzacy;
+import org.example.projekt_zpo.Error;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -158,10 +159,11 @@ public class LoginController {
                     isLoggedIn = true;
                 }
                 catch (Exception e){
+                    ObjectMapper mapper = new ObjectMapper();
+                    Error error = mapper.readValue(responseProwadzacy.body(), Error.class);
                     PasswordField.setText("");
                     LoginTextArea.setText("");
-                    WrongParametersError.setVisible(true);
-                    WrongParametersError.setText("Błędne Dane Logowania!");
+                    error.setLabelMessage(WrongParametersError);
                 }
             }
         } catch (Exception e) {

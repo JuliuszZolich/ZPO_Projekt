@@ -1,5 +1,7 @@
 package org.example.projekt_zpo;
 
+import javafx.scene.control.Label;
+
 public class Error {
     String error;
     int error_code;
@@ -18,5 +20,10 @@ public class Error {
 
     public int getError_code() {
         return error_code;
+    }
+
+    public void setLabelMessage(Label label) {
+        label.setVisible(true);
+        label.setText(error);
     }
 }
