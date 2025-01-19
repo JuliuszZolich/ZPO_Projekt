@@ -17,7 +17,12 @@ public class StudentListaObecnosci {
     }
 
     public String getAttendanceToString() {
-        return attendance.attendanceToString();
+        String attendanceString = "brak";
+        try {
+            attendanceString = attendance.attendanceToString();
+        }
+        catch (Exception ignored) {}
+        return attendanceString;
     }
 
     public String getStudentNameToString() {

@@ -16,6 +16,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
+import static org.example.projekt_zpo.AttendenceList.ip;
+
 public class DeleteStudentController {
     public static MainController mainController;
 
@@ -40,20 +42,20 @@ public class DeleteStudentController {
 
     public void delete(MouseEvent mouseEvent) throws URISyntaxException, IOException, InterruptedException {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        String studentIndex = choseStudent.getValue().toString();
-        if(studentIndex.equals("Wybierz Studenta")){
+        if(choseStudent.getValue() == null){
             errorLabel.setVisible(true);
             errorLabel.setText("Nie wybrano studenta");
         }
         else{
+            String studentIndex = choseStudent.getValue().toString();
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestDeleteStudent = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/usunstudentagrupa?studentId=" + studentIndex))
+                    .uri(new URI(ip + "/api/usunstudentagrupa?studentId=" + studentIndex))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
-            HttpResponse<String> responseDeleteGrupa = client.send(requestDeleteStudent, HttpResponse.BodyHandlers.ofString());
-            mainController.showStudentsInGroup();
+            HttpResponse<String> response = client.send(requestDeleteStudent, HttpResponse.BodyHandlers.ofString());
+            mainController.refreshActualGroup();
             stage.close();
         }
     }

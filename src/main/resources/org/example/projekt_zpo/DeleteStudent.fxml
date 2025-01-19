@@ -21,7 +21,7 @@
         <Button fx:id="CancelDeleteStudent" layoutX="87.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
         <Button fx:id="DeleteStudent" layoutX="223.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#delete" prefHeight="20.0" prefWidth="80.0" text="Usuń" />
         <Label fx:id="AddStudentErrorLabel" layoutX="164.0" layoutY="173.0" text="Błędny Index!" textFill="#c70505" underline="true" visible="false" />
-        <ChoiceBox fx:id="choseStudent" layoutX="64.0" layoutY="138.0" prefHeight="26.0" prefWidth="270.0" value="Wybierz Studenta" />
+        <ChoiceBox fx:id="choseStudent" layoutX="64.0" layoutY="138.0" prefHeight="26.0" prefWidth="270.0" />
         <Label fx:id="errorLabel" alignment="CENTER" layoutX="66.0" layoutY="173.0" prefHeight="18.0" prefWidth="270.0" text="Label" textFill="RED" visible="false">
             <font>
                 <Font name="System Bold" size="12.0" />

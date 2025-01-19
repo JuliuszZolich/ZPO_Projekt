@@ -1,10 +1,12 @@
-package org.example.projekt_zpo;
+package org.example.projekt_zpo.Controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.example.projekt_zpo.Error;
 
 import java.io.IOException;
 import java.net.URI;
@@ -12,6 +14,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
+import static org.example.projekt_zpo.AttendenceList.ip;
 
 public class AddStudentToDatabaseController {
     @FXML
@@ -42,12 +46,23 @@ public class AddStudentToDatabaseController {
         }
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest requestAddStudent = HttpRequest.newBuilder()
-                .uri(new URI("http://localhost:8080/api/dodajstudenta?indeks=" + indeks + "&imie=" + nameValue + "&nazwisko=" + surnameValue))
+                .uri(new URI(ip + "/api/dodajstudenta?indeks=" + indeks + "&imie=" + nameValue + "&nazwisko=" + surnameValue))
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .POST(HttpRequest.BodyPublishers.ofString(""))
                 .build();
-        HttpResponse<String> responseAddStudent = client.send(requestAddStudent, HttpResponse.BodyHandlers.ofString());
-        stage.close();
+        HttpResponse<String> response = client.send(requestAddStudent, HttpResponse.BodyHandlers.ofString());
+        if(response.statusCode() != 200){
+            ObjectMapper mapper = new ObjectMapper();
+            org.example.projekt_zpo.Error error = mapper.readValue(response.body(), org.example.projekt_zpo.Error.class);
+            nameTextArea.setText("");
+            surnameTextArea.setText("");
+            indexTextArea.setText("");
+            Error.errorLabel = errorLabel;
+            error.setLabelMessage();
+        }
+        else{
+            stage.close();
+        }
     }
 
     public void cancel(MouseEvent mouseEvent) {

@@ -6,7 +6,7 @@ public class Termin {
     private int id;
     private int grupaId;
     private String nazwa;
-    private Date data;
+    private String data;
     private int prowadzacyId;
 
     public void setNazwa(String nazwa) {
@@ -25,11 +25,11 @@ public class Termin {
         return grupaId;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 

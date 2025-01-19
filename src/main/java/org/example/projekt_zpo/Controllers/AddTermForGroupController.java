@@ -1,10 +1,12 @@
 package org.example.projekt_zpo.Controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.example.projekt_zpo.Error;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,6 +16,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+
+import static org.example.projekt_zpo.AttendenceList.ip;
 
 public class AddTermForGroupController {
     @FXML
@@ -60,14 +64,24 @@ public class AddTermForGroupController {
             String chosenDate = choseTerm.getValue().toString();
             String name = termNameTextArea.getText();
             HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestAddTermin =  HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/dodajtermin?grupaId=" + grupaID + "&nazwa=" + URLEncoder.encode(name, StandardCharsets.UTF_8) + "&data=" + chosenDate + "&prowadzacyId=" + prowadzacyId))
+            HttpRequest requestAddTerm =  HttpRequest.newBuilder()
+                    .uri(new URI(ip + "/api/dodajtermin?grupaId=" + grupaID + "&nazwa=" + URLEncoder.encode(name, StandardCharsets.UTF_8) + "&data=" + chosenDate + "&prowadzacyId=" + prowadzacyId))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
-            HttpResponse<String> responseAddGrupa = client.send(requestAddTermin, HttpResponse.BodyHandlers.ofString());
-            mainController.showGroupList();
-            stage.close();
+            HttpResponse<String> response = client.send(requestAddTerm, HttpResponse.BodyHandlers.ofString());
+            if(response.statusCode() != 200){
+                ObjectMapper mapper = new ObjectMapper();
+                org.example.projekt_zpo.Error error = mapper.readValue(response.body(), org.example.projekt_zpo.Error.class);
+                termNameTextArea.setText("");
+                choseTerm.setValue(null);
+                Error.errorLabel = errorLabel;
+                error.setLabelMessage();
+            }
+            else{
+                mainController.refreshActualGroup();
+                stage.close();
+            }
         }
     }
 }

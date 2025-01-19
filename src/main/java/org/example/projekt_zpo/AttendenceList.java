@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class AttendenceList extends Application {
+    public static final String ip = "http://localhost:8080";
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AttendenceList.class.getResource("LoginScene.fxml"));

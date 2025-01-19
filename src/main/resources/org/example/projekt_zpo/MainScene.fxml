@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="MainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="761.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.MainController">
-   <Button fx:id="addGroupButton" layoutX="65.0" layoutY="640.0" mnemonicParsing="false" onMouseClicked="#openAddGroupWindow" prefHeight="26.0" prefWidth="150.0" text="Dodaj Grupe" />
+   <Button fx:id="addGroupButton" layoutX="79.0" layoutY="645.0" mnemonicParsing="false" onMouseClicked="#openAddGroupWindow" prefHeight="26.0" prefWidth="150.0" text="Dodaj Grupe" />
    <Label fx:id="userNameLabel" alignment="CENTER" layoutX="14.0" layoutY="100.0" prefWidth="300.0" text="Nazwa Użytkownika">
       <font>
          <Font size="25.0" />
@@ -26,32 +25,28 @@
    </Label>
    <Line endX="250.0" layoutX="30.0" layoutY="210.0" />
    <Line endY="723.0" layoutX="320.0" layoutY="20.0" />
-   <Label fx:id="groupNameLabel" layoutX="367.0" layoutY="34.0" text="Nazwa Grupy">
+   <Label fx:id="groupNameLabel" layoutX="358.0" layoutY="18.0" prefHeight="74.0" prefWidth="567.0" text="Nazwa Grupy" visible="false">
       <font>
          <Font size="50.0" />
       </font>
    </Label>
-   <Button fx:id="addStudentButton" layoutX="1059.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#openAddStudentWindow" text="Dodaj Studenta" />
-   <Line endX="830.0" layoutX="343.0" layoutY="160.0" />
-   <ChoiceBox fx:id="groupChoiceTerminChoiceBox" layoutX="355.0" layoutY="118.0" prefWidth="150.0" value="Wybierz Termin" />
-   <ScrollPane hbarPolicy="NEVER" layoutX="355.0" layoutY="234.0" prefHeight="500.0" prefWidth="800.0">
-      <TableView fx:id="studentsTableView" prefHeight="499.0" prefWidth="800.0">
-         <columns>
-            <TableColumn fx:id="studentIndexColumn" prefWidth="75.0" text="Index" />
-            <TableColumn fx:id="studentNameColumn" prefWidth="245.0" text="Imię" />
-            <TableColumn fx:id="studentSurnameColumn" prefWidth="280.0" text="Nazwisko" />
-            <TableColumn fx:id="attendanceColumn" prefWidth="185.0" text="Obecność" />
-         </columns>
-      </TableView>
-   </ScrollPane>
-   <ScrollPane hbarPolicy="NEVER" layoutX="30.0" layoutY="229.0" prefHeight="400.0" prefWidth="250.0">
-      <TableView fx:id="groupTableView" prefHeight="404.0" prefWidth="239.0">
-         <columns>
-            <TableColumn fx:id="groupColumn" minWidth="0.0" prefWidth="252.0" text="Grupa" />
-         </columns>
-      </TableView>
-   </ScrollPane>
-   <Button fx:id="addTerminButton" layoutX="1059.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#openAddTermWindow" prefHeight="26.0" prefWidth="98.0" text="Dodaj Termin" />
+   <Button fx:id="addStudentButton" layoutX="1059.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#openAddStudentWindow" text="Dodaj Studenta" visible="false" />
+   <Line fx:id="rightLine" endX="830.0" layoutX="343.0" layoutY="160.0" visible="false" />
+   <ChoiceBox fx:id="groupChoiceTermChoiceBox" layoutX="393.0" layoutY="117.0" prefWidth="150.0" value="Wybierz Termin" visible="false" />
+   <TableView fx:id="studentsTableView" layoutX="358.0" layoutY="234.0" prefHeight="499.0" prefWidth="800.0" visible="false">
+      <columns>
+         <TableColumn fx:id="studentIndexColumn" prefWidth="75.0" text="Index" />
+         <TableColumn fx:id="studentNameColumn" prefWidth="245.0" text="Imię" />
+         <TableColumn fx:id="studentSurnameColumn" prefWidth="280.0" text="Nazwisko" />
+         <TableColumn fx:id="attendanceColumn" prefWidth="185.0" text="Obecność" />
+      </columns>
+   </TableView>
+   <TableView fx:id="groupTableView" layoutX="35.0" layoutY="224.0" prefHeight="404.0" prefWidth="239.0">
+      <columns>
+         <TableColumn fx:id="groupColumn" minWidth="0.0" prefWidth="252.0" text="Grupa" />
+      </columns>
+   </TableView>
+   <Button fx:id="addTerminButton" layoutX="1059.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#openAddTermWindow" prefHeight="26.0" prefWidth="98.0" text="Dodaj Termin" visible="false" />
    <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="120.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../../../images/user.png" />
    </ImageView>
@@ -59,19 +54,28 @@
       <Image url="@../../../images/group.png" />
    </ImageView>
    <Button fx:id="logOutButton" layoutX="1056.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="26.0" prefWidth="105.0" text="Wyloguj" />
-   <Button fx:id="deleteTerminButton" layoutX="943.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#openDeleteTermWindow" prefHeight="25.0" prefWidth="94.0" text="Usuń Termin" />
-   <ImageView fx:id="deleteGroupImageView" fitHeight="51.0" fitWidth="49.0" layoutX="695.0" layoutY="46.0" onMouseClicked="#openDeleteGroupWindow" pickOnBounds="true" preserveRatio="true">
+   <Button fx:id="deleteTerminButton" layoutX="943.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#openDeleteTermWindow" prefHeight="25.0" prefWidth="94.0" text="Usuń Termin" visible="false" />
+   <ImageView fx:id="deleteGroupImageView" fitHeight="26.0" fitWidth="33.0" layoutX="347.0" layoutY="117.0" onMouseClicked="#openDeleteGroupWindow" pickOnBounds="true" preserveRatio="true" visible="false">
       <image>
          <Image url="@../../../images/bin.png" />
       </image>
    </ImageView>
-   <Button fx:id="deleteStudentButton" layoutX="943.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#openDeleteStudentWindow" text="Usuń Studenta" />
-   <Button fx:id="setAttendanceForStudentButton" layoutX="525.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#openSetAttendanceForStudentWindow" prefHeight="25.0" prefWidth="105.0" text="Ustaw Obecność" />
-   <Button fx:id="addStudentToDatabaseButton" layoutX="65.0" layoutY="679.0" mnemonicParsing="false" onMouseClicked="#openAddStudentToDatabaseWindow" prefHeight="26.0" prefWidth="150.0" text="Dodaj Studenta" />
-   <Button fx:id="deleteStudentFromDatabaseButton" layoutX="65.0" layoutY="721.0" mnemonicParsing="false" onMouseClicked="#openDeleteStudentFromDatabaseWindow" prefHeight="26.0" prefWidth="150.0" text="Usuń Studenta" />
-   <Label fx:id="terminNameLabel" alignment="CENTER" layoutX="360.0" layoutY="173.0" prefHeight="36.0" prefWidth="794.0" text="Nazwa Terminu" textAlignment="CENTER">
+   <Button fx:id="deleteStudentButton" layoutX="943.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#openDeleteStudentWindow" text="Usuń Studenta" visible="false" />
+   <Button fx:id="setAttendanceForStudentButton" layoutX="555.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#openSetAttendanceForStudentWindow" prefHeight="25.0" prefWidth="105.0" text="Ustaw Obecność" visible="false" />
+   <Button fx:id="addStudentToDatabaseButton" layoutX="79.0" layoutY="682.0" mnemonicParsing="false" onMouseClicked="#openAddStudentToDatabaseWindow" prefHeight="26.0" prefWidth="150.0" text="Dodaj Studenta" />
+   <Button fx:id="deleteStudentFromDatabaseButton" layoutX="80.0" layoutY="720.0" mnemonicParsing="false" onMouseClicked="#openDeleteStudentFromDatabaseWindow" prefHeight="26.0" prefWidth="150.0" text="Usuń Studenta" />
+   <Label fx:id="terminNameLabel" alignment="CENTER" layoutX="360.0" layoutY="173.0" prefHeight="36.0" prefWidth="794.0" text="Nazwa Terminu" textAlignment="CENTER" visible="false">
       <font>
          <Font name="System Bold" size="18.0" />
       </font>
    </Label>
+   <TableView fx:id="studentsInGroupTableView" layoutX="357.0" layoutY="173.0" prefHeight="552.0" prefWidth="800.0" visible="false">
+      <columns>
+         <TableColumn fx:id="studentIndexStudentsInGroup" prefWidth="127.19998168945312" text="Index" />
+         <TableColumn fx:id="studentNameStudentsInGroup" prefWidth="304.0" text="Imię" />
+         <TableColumn fx:id="studentSurnameStudentsInGroup" prefWidth="369.59991455078125" text="Nazwisko" />
+      </columns>
+   </TableView>
+   <Button fx:id="showStudentsInGroupButton" layoutX="806.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#showStudentsInTableView" prefHeight="26.0" prefWidth="119.0" text="Pokaż Studentów" visible="false" />
+   <Label fx:id="choiceTerminLabel" layoutX="393.0" layoutY="92.0" prefHeight="18.0" prefWidth="150.0" text="Wybierz termin:" visible="false" />
 </AnchorPane>

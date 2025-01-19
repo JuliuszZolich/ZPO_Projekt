@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="471.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.AddStudentToDatabaseController">
+<AnchorPane prefHeight="471.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.projekt_zpo.Controllers.AddStudentToDatabaseController">
    <children>
       <Label layoutX="56.0" layoutY="48.0" text="Dodaj Studenta">
          <font>
@@ -15,8 +15,8 @@
       </Label>
       <TextField fx:id="nameTextArea" layoutX="83.0" layoutY="175.0" prefHeight="25.0" prefWidth="209.0" promptText="Wpisz Imię" />
       <TextField fx:id="surnameTextArea" layoutX="83.0" layoutY="255.0" prefHeight="25.0" prefWidth="209.0" promptText="Wpisz nazwisko" />
-      <Button fx:id="Cancel" layoutX="85.0" layoutY="396.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="25.0" prefWidth="78.0" text="Anuluj" />
-      <Button fx:id="Add" layoutX="215.0" layoutY="396.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="25.0" prefWidth="78.0" text="Dodaj" />
+      <Button fx:id="Cancel" layoutX="85.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="25.0" prefWidth="78.0" text="Anuluj" />
+      <Button fx:id="Add" layoutX="214.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="25.0" prefWidth="78.0" text="Dodaj" />
       <Label layoutX="98.0" layoutY="220.0" text="Nazwisko:">
          <font>
             <Font name="System Bold" size="18.0" />

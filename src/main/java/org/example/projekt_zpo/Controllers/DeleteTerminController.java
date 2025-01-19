@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+import static org.example.projekt_zpo.AttendenceList.ip;
+
 public class DeleteTerminController {
     @FXML
     public Button cancelButton;
@@ -56,19 +58,19 @@ public class DeleteTerminController {
         else {
             int id = 0;
             for(Termin termin : terms) {
-                if (termin.getData().equals(choseTerm.getValue())) {
+                if (termin.getData().toString().equals(choseTerm.getValue())) {
                     id = termin.getId();
                     break;
                 }
             }
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestAddGrupa = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/usuntermin?terminId=" + id))
+                    .uri(new URI(ip + "/api/usuntermin?terminId=" + id))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
             HttpResponse<String> responseAddGrupa = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
-            mainController.setTermsForGroup();
+            mainController.refreshActualGroup();
             stage.close();
         }
     }

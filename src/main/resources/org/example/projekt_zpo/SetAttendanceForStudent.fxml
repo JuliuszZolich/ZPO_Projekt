@@ -23,9 +23,9 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <Button fx:id="CancelButton" layoutX="90.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
-        <Button fx:id="setAttendance" layoutX="220.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#set" prefHeight="20.0" prefWidth="80.0" text="Ustaw" />
-        <Label fx:id="AddTerminError" alignment="CENTER" layoutX="67.0" layoutY="253.0" prefHeight="18.0" prefWidth="270.0" textFill="RED" visible="false" />
+        <Button fx:id="CancelButton" layoutX="87.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#cancel" prefHeight="20.0" prefWidth="80.0" text="Anuluj" />
+        <Button fx:id="setAttendance" layoutX="228.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#set" prefHeight="20.0" prefWidth="80.0" text="Ustaw" />
+        <Label fx:id="errorLabel" alignment="CENTER" layoutX="68.0" layoutY="270.0" prefHeight="10.0" prefWidth="270.0" textFill="RED" visible="false" />
       <ChoiceBox fx:id="choiceStudent" layoutX="67.0" layoutY="150.0" prefHeight="25.0" prefWidth="270.0" />
       <ChoiceBox fx:id="choiceAttendance" layoutX="65.0" layoutY="228.0" prefHeight="25.0" prefWidth="270.0" />
     </children>

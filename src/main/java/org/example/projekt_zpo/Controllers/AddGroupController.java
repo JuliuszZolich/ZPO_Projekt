@@ -16,6 +16,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
+import static org.example.projekt_zpo.AttendenceList.ip;
+
 public class AddGroupController {
     public static MainController mainController;
 
@@ -47,12 +49,12 @@ public class AddGroupController {
         else{
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestAddGrupa = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/dodajgrupe?nazwa=" + URLEncoder.encode(groupName, StandardCharsets.UTF_8)))
+                    .uri(new URI(ip + "/api/dodajgrupe?nazwa=" + URLEncoder.encode(groupName, StandardCharsets.UTF_8)))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
             HttpResponse<String> responseAddGrupa = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
-            mainController.showGroupList();
+            mainController.refreshScene();
             stage.close();
         }
 

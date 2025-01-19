@@ -18,6 +18,8 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.projekt_zpo.AttendenceList.ip;
+
 public class DeleteStudentFromDatabaseController {
     @FXML
     public ChoiceBox<Integer> choseStudent;
@@ -31,7 +33,7 @@ public class DeleteStudentFromDatabaseController {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestTerminy = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/studenci"))
+                    .uri(new URI(ip + "/api/studenci"))
                     .GET()
                     .build();
             HttpResponse<String> responseTerms = client.send(requestTerminy, HttpResponse.BodyHandlers.ofString());
@@ -67,7 +69,7 @@ public class DeleteStudentFromDatabaseController {
         else {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestDeleteStudentFromDatabase = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/usunstudenta?id=" + value))
+                    .uri(new URI(ip + "/api/usunstudenta?id=" + value))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();

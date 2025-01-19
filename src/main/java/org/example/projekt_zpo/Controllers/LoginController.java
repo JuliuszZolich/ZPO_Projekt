@@ -11,6 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.example.projekt_zpo.AttendenceList;
 import org.example.projekt_zpo.Prowadzacy;
 import org.example.projekt_zpo.Error;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.util.Objects;
  */
 public class LoginController {
     /** Flaga informująca o statusie logowania użytkownika */
-    Boolean isLoggedIn = false;
+    public static Boolean isLoggedIn = false;
 
     /** Pole gdzie użytkownik wprowadza login */
     @FXML
@@ -100,9 +101,7 @@ public class LoginController {
         mainController.setUserName(prowadzacy.getImie(), prowadzacy.getNazwisko());
         MainController.prowadzacyId = prowadzacy.getId();
         mainController.setColumns();
-        mainController.showGroupList();
-        mainController.setTermsForGroup();
-        mainController.showStudentsInGroup();
+        mainController.refreshScene();
     }
 
     /**
@@ -136,7 +135,7 @@ public class LoginController {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestLogin = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/login?login=" + login + "&password=" + password))
+                    .uri(new URI( AttendenceList.ip + "/api/login?login=" + login + "&password=" + password))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
@@ -152,18 +151,22 @@ public class LoginController {
                 errorLabel.setVisible(true);
                 errorLabel.setText("Serwer nie odpowiada!");
             }
-            if(isServerResponding){
-                try{
-                    ObjectMapper mapper = new ObjectMapper();
-                    prowadzacy = mapper.readValue(responseProwadzacy.body(), Prowadzacy.class);
-                    isLoggedIn = true;
-                }
-                catch (Exception e){
+            if(isServerResponding) {
+                if (responseProwadzacy.statusCode() != 200) {
                     ObjectMapper mapper = new ObjectMapper();
                     Error error = mapper.readValue(responseProwadzacy.body(), Error.class);
                     passwordField.setText("");
                     loginTextArea.setText("");
-                    error.setLabelMessage(errorLabel);
+                    Error.errorLabel = errorLabel;
+                    error.setLabelMessage();
+                } else {
+                    try {
+                        ObjectMapper mapper = new ObjectMapper();
+                        prowadzacy = mapper.readValue(responseProwadzacy.body(), Prowadzacy.class);
+                        isLoggedIn = true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (Exception e) {

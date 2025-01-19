@@ -1,16 +1,22 @@
 package org.example.projekt_zpo.Controllers;
 
+import org.example.projekt_zpo.Error;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.example.projekt_zpo.Error;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
+import static org.example.projekt_zpo.AttendenceList.ip;
 
 public class AddStudentToGroupController {
     @FXML
@@ -37,13 +43,22 @@ public class AddStudentToGroupController {
             else{
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest requestAddGrupa = HttpRequest.newBuilder()
-                        .uri(new URI("http://localhost:8080/api/dodajstudentagrupa?studentId=" + index + "&groupId=" + groupID))
+                        .uri(new URI(ip + "/api/dodajstudentagrupa?studentId=" + index + "&groupId=" + groupID))
                         .header("Content-Type", "application/x-www-form-urlencoded")
                         .POST(HttpRequest.BodyPublishers.ofString(""))
                         .build();
-                HttpResponse<String> responseAddGrupa = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
-                mainController.showStudentsInGroup();
-                stage.close();
+                HttpResponse<String> response = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() != 200) {
+                    ObjectMapper mapper = new ObjectMapper();
+                    Error error = mapper.readValue(response.body(), Error.class);
+                    addStudentIndex.setText("");
+                    Error.errorLabel = errorLabel;
+                    error.setLabelMessage();
+                }
+                else{
+                    mainController.refreshActualGroup();
+                    stage.close();
+                }
             }
         }
         catch (NumberFormatException e) {
