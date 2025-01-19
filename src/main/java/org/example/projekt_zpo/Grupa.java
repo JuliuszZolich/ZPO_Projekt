@@ -1,7 +1,5 @@
 package org.example.projekt_zpo;
 
-import java.util.ArrayList;
-
 /**
  * Klasa reprezentująca grupę w aplikacji.
  * Zawiera dane dotyczące identyfikatora grupy oraz jej nazwy.
