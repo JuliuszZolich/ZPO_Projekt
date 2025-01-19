@@ -18,7 +18,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.projekt_zpo.AttendenceList.ip;
+import static org.example.projekt_zpo.AttendanceList.ip;
 
 public class DeleteStudentFromDatabaseController {
     @FXML
@@ -32,14 +32,14 @@ public class DeleteStudentFromDatabaseController {
         ArrayList<Student> students = null;
         try {
             HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestTerminy = HttpRequest.newBuilder()
+            HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(ip + "/api/studenci"))
                     .GET()
                     .build();
-            HttpResponse<String> responseTerms = client.send(requestTerminy, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                students = (ArrayList<Student>) mapper.readValue(responseTerms.body(), new TypeReference<List<Student>>() {
+                students = (ArrayList<Student>) mapper.readValue(response.body(), new TypeReference<List<Student>>() {
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -68,12 +68,12 @@ public class DeleteStudentFromDatabaseController {
         }
         else {
             HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestDeleteStudentFromDatabase = HttpRequest.newBuilder()
+            HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(ip + "/api/usunstudenta?id=" + value))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
-            HttpResponse<String> responseDeleteStudentFromDatabase = client.send(requestDeleteStudentFromDatabase, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             mainController.showStudentsInGroup();
         }
         stage.close();

@@ -12,7 +12,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static org.example.projekt_zpo.AttendenceList.ip;
+import static org.example.projekt_zpo.AttendanceList.ip;
 
 public class ConfirmDeleteGroupController {
     @FXML
@@ -26,12 +26,12 @@ public class ConfirmDeleteGroupController {
     public void delete(MouseEvent mouseEvent) throws URISyntaxException, IOException, InterruptedException {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest requestDeleteGrupa = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(ip + "/api/usungrupe?grupaId=" + groupID))
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .POST(HttpRequest.BodyPublishers.ofString(""))
                 .build();
-        HttpResponse<String> responseDeleteGrupa = client.send(requestDeleteGrupa, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         mainController.refreshScene();
         stage.close();
     }

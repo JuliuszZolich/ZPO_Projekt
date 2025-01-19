@@ -9,11 +9,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class AttendenceList extends Application {
+public class AttendanceList extends Application {
     public static final String ip = "http://localhost:8080";
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AttendenceList.class.getResource("LoginScene.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AttendanceList.class.getResource("LoginScene.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/app_icon.png")).toExternalForm());
         stage.getIcons().add(image);

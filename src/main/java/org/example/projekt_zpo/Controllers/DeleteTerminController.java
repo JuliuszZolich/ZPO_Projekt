@@ -16,10 +16,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
-import static org.example.projekt_zpo.AttendenceList.ip;
+import static org.example.projekt_zpo.AttendanceList.ip;
 
 public class DeleteTerminController {
     @FXML
@@ -64,12 +63,12 @@ public class DeleteTerminController {
                 }
             }
             HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestAddGrupa = HttpRequest.newBuilder()
+            HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(ip + "/api/usuntermin?terminId=" + id))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
-            HttpResponse<String> responseAddGrupa = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             mainController.refreshActualGroup();
             stage.close();
         }

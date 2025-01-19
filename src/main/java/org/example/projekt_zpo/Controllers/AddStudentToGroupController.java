@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.example.projekt_zpo.Error;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,7 +15,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static org.example.projekt_zpo.AttendenceList.ip;
+import static org.example.projekt_zpo.AttendanceList.ip;
 
 public class AddStudentToGroupController {
     @FXML
@@ -42,12 +41,12 @@ public class AddStudentToGroupController {
             }
             else{
                 HttpClient client = HttpClient.newHttpClient();
-                HttpRequest requestAddGrupa = HttpRequest.newBuilder()
+                HttpRequest request = HttpRequest.newBuilder()
                         .uri(new URI(ip + "/api/dodajstudentagrupa?studentId=" + index + "&groupId=" + groupID))
                         .header("Content-Type", "application/x-www-form-urlencoded")
                         .POST(HttpRequest.BodyPublishers.ofString(""))
                         .build();
-                HttpResponse<String> response = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 if (response.statusCode() != 200) {
                     ObjectMapper mapper = new ObjectMapper();
                     Error error = mapper.readValue(response.body(), Error.class);

@@ -16,7 +16,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
-import static org.example.projekt_zpo.AttendenceList.ip;
+import static org.example.projekt_zpo.AttendanceList.ip;
 
 public class SetAttendanceForStudentController {
     @FXML
@@ -52,12 +52,12 @@ public class SetAttendanceForStudentController {
                 }
             }
             HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestAddGrupa = HttpRequest.newBuilder()
+            HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(ip + "/api/zmienobecnosc?studentId=" + studentID + "&terminId=" + termin.getId() + "&attendance=" + attendanceToInt))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
-            HttpResponse<String> response = client.send(requestAddGrupa, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             mainController.refreshGroupAttendanceTable();
             stage.close();
         }

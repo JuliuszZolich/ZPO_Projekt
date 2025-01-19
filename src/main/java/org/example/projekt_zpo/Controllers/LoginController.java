@@ -11,7 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.example.projekt_zpo.AttendenceList;
+import org.example.projekt_zpo.AttendanceList;
 import org.example.projekt_zpo.Prowadzacy;
 import org.example.projekt_zpo.Error;
 import java.io.IOException;
@@ -135,7 +135,7 @@ public class LoginController {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest requestLogin = HttpRequest.newBuilder()
-                    .uri(new URI( AttendenceList.ip + "/api/login?login=" + login + "&password=" + password))
+                    .uri(new URI( AttendanceList.ip + "/api/login?login=" + login + "&password=" + password))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();

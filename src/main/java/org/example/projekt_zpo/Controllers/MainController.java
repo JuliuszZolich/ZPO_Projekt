@@ -27,17 +27,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.example.projekt_zpo.AttendenceList.ip;
+import static org.example.projekt_zpo.AttendanceList.ip;
 
 public class MainController {
     @FXML
-    public Button addStudentButton, addTerminButton, deleteTerminButton, deleteStudentButton, logOutButton, deleteStudentFromDatabaseButton, addStudentToDatabaseButton, addGroupButton, setAttendanceForStudentButton;
+    public Button showStudentsInGroupButton, addStudentButton, addTerminButton, deleteTerminButton, deleteStudentButton, logOutButton, deleteStudentFromDatabaseButton, addStudentToDatabaseButton, addGroupButton, setAttendanceForStudentButton;
     @FXML
     public ImageView deleteGroupImageView;
     @FXML
     public ChoiceBox<String> groupChoiceTermChoiceBox;
     @FXML
-    public Label userNameLabel, groupNameLabel, terminNameLabel;
+    public Label userNameLabel, groupNameLabel, terminNameLabel, choiceTerminLabel;
     @FXML
     public TableView<Grupa> groupTableView;
     @FXML
@@ -48,6 +48,14 @@ public class MainController {
     public TableColumn<StudentListaObecnosci, String> studentIndexColumn, attendanceColumn, studentNameColumn, studentSurnameColumn;
     @FXML
     public Line rightLine;
+    @FXML
+    public TableView<Student> studentsInGroupTableView;
+    @FXML
+    public TableColumn<Student, Integer> studentIndexStudentsInGroup;
+    @FXML
+    public TableColumn<Student, String> studentNameStudentsInGroup;
+    @FXML
+    public TableColumn<Student, String> studentSurnameStudentsInGroup;
 
     public HttpClient client = HttpClient.newHttpClient();
 
@@ -57,18 +65,6 @@ public class MainController {
     public static ArrayList<Termin> actualTerms;
     public static ArrayList<StudentListaObecnosci> actualStudentsWithAttendance;
     public Termin actualTerm;
-    @FXML
-    public TableView<Student> studentsInGroupTableView;
-    @FXML
-    public TableColumn<Student, Integer> studentIndexStudentsInGroup;
-    @FXML
-    public TableColumn<Student, String> studentNameStudentsInGroup;
-    @FXML
-    public TableColumn<Student, String> studentSurnameStudentsInGroup;
-    @FXML
-    public Button showStudentsInGroupButton;
-    @FXML
-    public Label choiceTerminLabel;
 
     public void initialize(){
 
@@ -109,11 +105,11 @@ public class MainController {
 
     public void refreshGroupAttendanceTable() {
         terminNameLabel.setVisible(true);
-        terminNameLabel.setText(actualTerm.getNazwa());
         choiceTerminLabel.setVisible(true);
         studentsTableView.setVisible(true);
         setAttendanceForStudentButton.setVisible(true);
         studentsInGroupTableView.setVisible(false);
+        terminNameLabel.setText(actualTerm.getNazwa());
         showStudentsInGroup();
     }
 
@@ -133,8 +129,8 @@ public class MainController {
         groupChoiceTermChoiceBox.getItems().clear();
         studentsTableView.setVisible(false);
         terminNameLabel.setVisible(false);
-        actualStudents = null;
         studentsInGroupTableView.setVisible(true);
+        actualStudents = null;
         showStudentsInTableView();
         setGroupButtons(true);
         setTermsForGroup();
@@ -424,8 +420,8 @@ public class MainController {
         setAttendanceForStudentButton.setVisible(false);
         studentsTableView.setVisible(false);
         terminNameLabel.setVisible(false);
-        actualStudents = getStudents();
         studentsInGroupTableView.setVisible(true);
+        actualStudents = getStudents();
         ObservableList<Student> students = FXCollections.observableArrayList(actualStudents);
         for (int i = 0; i < actualStudents.size(); i++) {
             students.set(i, actualStudents.get(i));
