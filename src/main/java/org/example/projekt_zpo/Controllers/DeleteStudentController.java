@@ -18,16 +18,44 @@ import java.util.ArrayList;
 
 import static org.example.projekt_zpo.AttendanceList.ip;
 
+/**
+ * Kontroler odpowiedzialny za usuwanie studenta z listy.
+ * Umożliwia wybór studenta z listy i wysłanie zapytania do serwera w celu usunięcia go z grupy.
+ * @author Sebastian Cieślik
+ * @version  1.0
+ */
 public class DeleteStudentController {
+
+    /**
+     * Główny kontroler aplikacji, wykorzystywany do odświeżania grupy po usunięciu studenta.
+     */
     public static MainController mainController;
 
+    /**
+     * Lista studentów dostępnych do usunięcia.
+     * Jest to lista obiektów typu {@link Student}, zawierająca wszystkich studentów w danej grupie.
+     */
     public static ArrayList<Student> students;
+
+    /**
+     * ChoiceBox, w którym użytkownik wybiera studenta do usunięcia.
+     * Wartości w tym ChoiceBox są indeksami studentów.
+     */
     @FXML
     public ChoiceBox<Integer> choseStudent;
 
+    /**
+     * Etykieta wyświetlająca komunikaty o błędach.
+     * Jest widoczna, gdy użytkownik nie wybierze studenta z listy.
+     */
     @FXML
     public Label errorLabel;
 
+    /**
+     * Metoda ustawia listę studentów w polu {@link #choseStudent}.
+     * Dodaje do ChoiceBoxa indeksy studentów znajdujących się na liście {@link #students}.
+     * @since 1.0
+     */
     public void setStudents() {
         choseStudent.getItems().clear();
         for (Student student : students) {
@@ -35,11 +63,27 @@ public class DeleteStudentController {
         }
     }
 
+    /**
+     * Metoda zamyka okno aplikacji po kliknięciu przycisku "Anuluj".
+     * @param mouseEvent Zdarzenie kliknięcia myszy, które wywołuje zamknięcie okna.
+     * @since 1.0
+     */
     public void cancel(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Metoda odpowiadająca za usunięcie studenta z grupy.
+     * Jeśli nie został wybrany żaden student, wyświetli komunikat o błędzie.
+     * W przeciwnym razie, wysyła zapytanie do serwera, aby usunąć wybranego studenta.
+     * Po pomyślnym usunięciu studenta, okno zostaje zamknięte.
+     * @param mouseEvent Zdarzenie kliknięcia myszy, które wywołuje usunięcie studenta.
+     * @throws URISyntaxException Jeśli wystąpi problem z tworzeniem URI.
+     * @throws IOException Jeśli wystąpi problem z wysyłaniem żądania HTTP.
+     * @throws InterruptedException Jeśli wystąpi problem z wykonaniem żądania HTTP.
+     * @since 1.0
+     */
     public void delete(MouseEvent mouseEvent) throws URISyntaxException, IOException, InterruptedException {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         if(choseStudent.getValue() == null){
