@@ -32,7 +32,7 @@
    </Label>
    <Button fx:id="addStudentButton" layoutX="1059.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#openAddStudentWindow" text="Dodaj Studenta" visible="false" />
    <Line fx:id="rightLine" endX="830.0" layoutX="343.0" layoutY="160.0" visible="false" />
-   <ChoiceBox fx:id="groupChoiceTermChoiceBox" layoutX="393.0" layoutY="117.0" prefWidth="150.0" value="Wybierz Termin" visible="false" />
+   <ChoiceBox fx:id="groupChoiceTermChoiceBox" layoutX="393.0" layoutY="117.0" prefWidth="150.0" visible="false" />
    <TableView fx:id="studentsTableView" layoutX="358.0" layoutY="234.0" prefHeight="499.0" prefWidth="800.0" visible="false">
       <columns>
          <TableColumn fx:id="studentIndexColumn" prefWidth="75.0" text="Index" />

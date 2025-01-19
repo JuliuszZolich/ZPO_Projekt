@@ -18,26 +18,53 @@ import java.nio.charset.StandardCharsets;
 
 import static org.example.projekt_zpo.AttendanceList.ip;
 
+/**
+ * Kontroler odpowiedzialny za dodawanie grupy
+ *
+ * @author Sebastian Cieślik
+ * @version 1.0
+ */
 public class AddGroupController {
+
+    /** Główny kontroler aplikacji. */
     public static MainController mainController;
 
+    /** Pole tekstowe do wpisania nazwy grupy. */
     @FXML
     public TextField groupNameTextArea;
 
+    /** Przycisk anulujący dodawanie grupy. */
     @FXML
     public Button cancelAddGroupButton;
 
+    /** Przycisk zatwierdzający dodanie grupy. */
     @FXML
     public Button addGroupButton;
 
+    /** Etykieta wyświetlająca komunikaty o błędach. */
     @FXML
     public Label errorLabel;
 
+    /**
+     * Zamyka aktualne okno.
+     *
+     * @param mouseEvent zdarzenie kliknięcia myszy.
+     * @since 1.0
+     */
     public void close(MouseEvent mouseEvent) {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Dodaje nową grupę na podstawie wprowadzonej nazwy.
+     *
+     * @param mouseEvent zdarzenie kliknięcia myszy.
+     * @throws URISyntaxException jeśli URI jest nieprawidłowe.
+     * @throws IOException jeśli wystąpi problem z wejściem/wyjściem.
+     * @throws InterruptedException jeśli operacja zostanie przerwana.
+     * @since 1.0
+     */
     public void add(MouseEvent mouseEvent) throws URISyntaxException, IOException, InterruptedException {
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         String groupName = groupNameTextArea.getText();
@@ -45,8 +72,7 @@ public class AddGroupController {
             errorLabel.setText("Nie podano nazwy grupy!");
             errorLabel.setVisible(true);
             groupNameTextArea.setText("");
-        }
-        else{
+        } else {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(ip + "/api/dodajgrupe?nazwa=" + URLEncoder.encode(groupName, StandardCharsets.UTF_8)))
@@ -57,6 +83,5 @@ public class AddGroupController {
             mainController.refreshScene();
             stage.close();
         }
-
     }
 }

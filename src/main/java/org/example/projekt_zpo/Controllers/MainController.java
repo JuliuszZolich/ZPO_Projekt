@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import org.example.projekt_zpo.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URI;
@@ -130,6 +131,7 @@ public class MainController {
         studentsTableView.setVisible(false);
         terminNameLabel.setVisible(false);
         studentsInGroupTableView.setVisible(true);
+        choiceTerminLabel.setVisible(true);
         actualStudents = null;
         showStudentsInTableView();
         setGroupButtons(true);
@@ -141,13 +143,13 @@ public class MainController {
         userNameLabel.setText(userName + " " + userLastName);
     }
 
-    public void setTitleAndIconForWindow(String title, Stage stage) {
+    public void setTitleAndIconForWindow(String title, @NotNull Stage stage) {
         stage.setTitle(title);
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/app_icon.png")).toExternalForm());
         stage.getIcons().add(image);
     }
 
-    void setActualGroupTitle(Grupa selectedGroup) {
+    void setActualGroupTitle(@NotNull Grupa selectedGroup) {
         groupNameLabel.setText(selectedGroup.getNazwa());
     }
 
@@ -405,7 +407,7 @@ public class MainController {
         blockWindow((Stage) deleteStudentFromDatabaseButton.getScene().getWindow(), stage);
     }
 
-    public void blockWindow(Stage ownerStage, Stage newWindowStage) {
+    public void blockWindow(Stage ownerStage, @NotNull Stage newWindowStage) {
         newWindowStage.initOwner(ownerStage);
         newWindowStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
         newWindowStage.showAndWait();
